@@ -1,0 +1,81 @@
+<div class="flex flex-col justify-center items-center gap-6 overflow-hidden h-screen">
+  <div class="flex justify-center items-center flex-col gap-y-3 w-[50%] sm:w-[25%]">
+    <img class="w-full h-full" [src]="logo" alt="" />
+  </div>
+
+  <div class="w-full sm:w-[50%] px-[30px] py-[50px] border-2">
+    <h1 class="text-center text-2lg sm:text-3xl lg:text-[1.7vw]">
+      <span class="text-primary">{{ authLogger() === 'admin' ? 'Admin' : 'Doctor' }}</span> Login
+    </h1>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()"
+      class="p-[20px] w-full flex flex-col gap-y-5"
+    >
+      <div class="flex flex-col gap-y-[5px] text-lg sm:text-2xl lg:text-[1.5vw]">
+        <label class="font-medium" for="em">Email</label>
+        <input
+          class="border outline-0 w-full sm:w-[30vw] p-[5px]"
+          [ngClass]="
+            email?.touched && email?.invalid && email?.dirty ? 'border-danger' : 'border-sky-300'
+          "
+          type="text"
+          id="em"
+          formControlName="email"
+        />
+        @if (email?.touched && email?.invalid && email?.dirty) {
+          @if (email?.getError('required')) {
+            <div class="text-danger">Email is required</div>
+          } @else if (email?.getError('email')) {
+            <div class="text-danger">Email is invalid</div>
+          }
+        }
+      </div>
+
+      <div class="flex flex-col gap-y-[5px] text-lg sm:text-2xl lg:text-[1.5vw]">
+        <label class="font-medium" for="ps">Password</label>
+        <input
+          [ngClass]="
+            password?.touched && password?.invalid && password?.dirty
+              ? 'border-danger'
+              : 'border-sky-300'
+          "
+          class="border outline-0 w-full sm:w-[30vw] p-[5px]"
+          type="text"
+          id="ps"
+          formControlName="password"
+        />
+        @if (password?.touched && password?.invalid && password?.dirty) {
+          @if (password?.getError('required')) {
+            <div class="text-danger">password is required</div>
+          } @else if (password?.getError('pattern') || password?.getError('maxlength')) {
+            <div class="text-danger">password is invalid</div>
+          } @else if (password?.getError('minlength')) {
+            <div class="text-danger">Enter a strong password</div>
+          }
+        }
+      </div>
+      <div class="text-lg sm:text-2xl lg:text-[1.5vw]">
+        @if (authLogger() === 'admin') {
+          <p class="text-secondary">
+            Doctor login
+            <span (click)="update('doctor')" class="text-primary cursor-pointer">Sign in →</span>
+          </p>
+        } @else if (authLogger() === 'doctor') {
+          <p class="text-secondary">
+            Admin login<span (click)="update('admin')" class="text-primary cursor-pointer">
+              Sign in →</span
+            >
+          </p>
+        }
+      </div>
+      <button
+        [disabled]="loginForm.invalid"
+        [ngClass]="loginForm.invalid ? 'cursor-not-allowed' : 'cursor-pointer'"
+        class="bg-green-500 font-semibold p-2 text-2lg sm:text-3xl lg:text-[1.7vw] w-full sm:w-[30vw] text-white"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</div>
