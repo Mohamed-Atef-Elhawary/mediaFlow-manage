@@ -1,3 +1,38 @@
-<div class="h-full border-r-2 border-gray-200">
-  <p>admin-sidebar works!</p>
+<div class="h-full border-b-2 sm:border-r-2 border-gray-200">
+  <div>
+    <ul>
+      <li
+        routerLink="/admin/dashboard"
+        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+      >
+        <fa-icon [icon]="dashIcon"></fa-icon>
+        <p>Dashboard</p>
+      </li>
+      <li
+        routerLink="/admin/appointment"
+        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+      >
+        <fa-icon [icon]="appoitIcon"></fa-icon>
+        <p>Appointments</p>
+      </li>
+      <li
+        routerLink="/admin/add"
+        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+      >
+        <fa-icon [icon]="addIcon"></fa-icon>
+        <p>Add Doctor</p>
+      </li>
+      <li
+        routerLink="/admin/list"
+        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+      >
+        <fa-icon [icon]="dashIcon"></fa-icon>
+        <p>Doctors List</p>
+      </li>
+    </ul>
+  </div>
 </div>

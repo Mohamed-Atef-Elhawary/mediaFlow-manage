@@ -26,6 +26,23 @@ export const routes: Routes = [
           ),
         title: 'dashboard',
       },
+      {
+        path: 'appointment',
+        loadComponent: () =>
+          import('./components/adminComponents/admin-appoinments/admin-appoinments').then(
+            (c) => c.AddminAppoinments,
+          ),
+      },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('./components/adminComponents/doctor-list/doctor-list').then((c) => c.DoctorList),
+      },
+      {
+        path: 'add',
+        loadComponent: () =>
+          import('./components/adminComponents/add-doctor/add-doctor').then((c) => c.AddDoctor),
+      },
     ],
   },
 

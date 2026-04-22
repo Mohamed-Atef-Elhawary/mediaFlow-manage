@@ -18,9 +18,14 @@ export class App {
   ) {
     if (this.authService.authView() === 'outer') {
       this.router.navigate(['/outer']);
+    } else if (this.authService.authView() === 'authorized') {
+      if (this.authService.authLogger() === 'admin') {
+        this.router.navigate(['/admin']);
+      }
     }
   }
   ngOnInit() {
     console.log(this.authService.authView());
+    console.log(this.authService.authLogger());
   }
 }

@@ -1,1 +1,73 @@
-<p class="h-full">admin-dashboard works!</p>
+<!-- <p class="h-full"></p> -->
+<div class="p-4 bg-gray-50">
+  <div class="flex gap-4 flex-col md:flex-row">
+    <article
+      class="bg-white p-2 flex md:flex-col lg:flex-row lg:items-center gap-2 md:text-[1.2vw] border-2 border-gray-200 md:w-[20vw] shrink-0"
+    >
+      <div>
+        <fa-icon [icon]="docIcon" class="bg-sky-100 text-primary md:text-[2vw]"></fa-icon>
+      </div>
+      <div>
+        <p class="text-secondary font-medium">
+          Number of doctors
+          <span class="text-gray-400 font-bold">{{ dashData().numberOdDoctors }}</span>
+        </p>
+      </div>
+    </article>
+    <article
+      class="bg-white p-2 flex md:flex-col lg:flex-row lg:items-center gap-2 md:text-[1.2vw] border-2 border-gray-200 md:w-[20vw] shrink-0"
+    >
+      <div>
+        <fa-icon [icon]="appointIcon" class="bg-sky-100 text-primary md:text-[2vw]"></fa-icon>
+      </div>
+      <div>
+        <p class="text-secondary font-medium">
+          Number of appointments
+          <span class="text-gray-400 font-bold">{{ dashData().numberOfAppointments }}</span>
+        </p>
+      </div>
+    </article>
+
+    <article
+      class="bg-white p-2 flex md:flex-col lg:flex-row lg:items-center gap-2 md:text-[1.2vw] border-2 border-gray-200 md:w-[20vw] shrink-0"
+    >
+      <div>
+        <fa-icon [icon]="patientIcon" class="bg-sky-100 text-primary md:text-[2vw]"></fa-icon>
+      </div>
+      <div>
+        <p class="text-secondary font-medium">
+          Number of patients
+          <span class="text-gray-400 font-bold">{{ dashData().numberOfPatients }}</span>
+        </p>
+      </div>
+    </article>
+  </div>
+  @if (dashData().latestAppointments.length) {
+    <div class="mt-6">
+      <div class="flex gap-2 border-2 border-gray-200 p-2 md:text-[1.3vw]">
+        <fa-icon class="text-primary" [icon]="shareIcon"></fa-icon>
+        <p class="font-semibold">Latest Appointment</p>
+      </div>
+      <ul>
+        @for (appointment of dashData().latestAppointments; track appointment._id) {
+          <li class="border-2 border-t-0 border-gray-200 p-4 flex justify-between items-center">
+            <div class="flex gap-2 items-center">
+              <div class="size-12 md:w-[3vw] md:h-[3vw] overflow-hidden">
+                <img class="w-full h-full object-cover" [src]="appointment.docData.image" alt="" />
+              </div>
+              <div class="md:text-[1.2vw]">
+                <p class="text-dark font-medium">{{ appointment.docData.name }}</p>
+                <p class="text-secondary">{{ getDate(appointment.date) | date }}</p>
+              </div>
+            </div>
+
+            <fa-icon
+              class="text-2lg md:text-[1.5vw] cursor-pointer bg-gray-300 border-2 border-red-300 text-danger hover:border-danger"
+              [icon]="xIcon"
+            ></fa-icon>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</div>
