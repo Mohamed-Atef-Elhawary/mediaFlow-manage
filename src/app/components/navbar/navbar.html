@@ -1,0 +1,25 @@
+@if (display()) {
+  <div class="fixed w-full h-[60px] lg:h-[5vw] bg-white">
+    <div class="mx-[2vw] sm:mx-[5vw] h-full flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <div>
+          <div class="w-[100px] h-[50px] lg:h-auto lg:w-[8vw]">
+            <img [src]="logo" alt="" />
+          </div>
+        </div>
+        <p>{{ loger().toUpperCase() }}</p>
+        <div>
+          <button>Logout</button>
+        </div>
+      </div>
+
+      <div>
+        @if (loger() === 'admin') {
+          <div class="w-[100px] h-[50px] lg:h-[4vw] lg:w-[8vw]">
+            <img class="w-full h-full object-cover" [src]="adminImage()" alt="" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

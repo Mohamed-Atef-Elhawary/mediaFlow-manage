@@ -1,11 +1,14 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, Signal, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { PhotoService } from '../../services/photoservice';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { toastrConfig } from '../../config/toastrConfig';
 import { NgClass } from '@angular/common';
 import { LoginType } from '../../types/LoginType';
+import { LoginApi } from '../../interfaces/login-api';
+import { AuthAdmin } from '../../services/auth-admin';
 
 @Component({
   selector: 'app-login',
@@ -16,24 +19,26 @@ import { LoginType } from '../../types/LoginType';
 export class Login implements OnInit {
   loginForm!: FormGroup;
   logo: string;
-  authLogger = signal<LoginType>('admin');
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private authAdmin: AuthAdmin,
     private photo: PhotoService,
     private toastr: ToastrService,
     private router: Router,
   ) {
     this.logo = this.photo.static.logo;
   }
+  authLogger: Signal<LoginType> = computed(() => this.authService.authLogger());
 
   ngOnInit() {
+    console.log(this.authService.authView());
     this.cleareLoginForm();
   }
 
   update(logger: LoginType) {
-    this.authLogger.set(logger);
+    this.authService.authLogger.set(logger);
   }
 
   cleareLoginForm() {
@@ -66,7 +71,29 @@ export class Login implements OnInit {
   get password() {
     return this.loginForm.get('password');
   }
-  submit() {}
+  submit() {
+    if (this.authLogger() === 'admin') {
+      this.adminLogin(this.loginForm.value);
+    } else {
+      this.doctorLogin(this.loginForm.value);
+    }
+  }
 
-  login() {}
+  adminLogin(data: LoginApi) {
+    this.authAdmin.login(data).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.authAdmin.setInfo(res.data);
+          this.authService.authView.set('authorized');
+          this.router.navigate(['/admin']);
+          console.log(this.authService.authView());
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+        console.log(err);
+      },
+    });
+  }
+  doctorLogin(data: LoginApi) {}
 }
