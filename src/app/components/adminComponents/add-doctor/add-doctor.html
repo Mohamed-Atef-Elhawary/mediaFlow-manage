@@ -1,1 +1,212 @@
-<p>add-doctor works!</p>
+<div class="p-4 bg-gray-50">
+  <h1 class="tex-lg md:text-[1.5vw] font-semibold">Add Doctor</h1>
+  <div class="mt-6 border-2 border-gray-200 p-4">
+    <form [formGroup]="docForm" (ngSubmit)="submit()">
+      <!-- doc img -->
+      <div class="w-fit">
+        <label for="docImg">
+          <div class="flex gap-2 cursor-pointer">
+            <fa-icon [icon]="docIcon"></fa-icon>
+            <p>Upload doctor picture</p>
+          </div>
+        </label>
+        <input class="hidden" type="file" id="docImg" />
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-6 mt-6">
+        <!-- left side -->
+        <div class="bg-white flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw]">
+          <div class="flex flex-col gap-1 w-[80%]">
+            <label class="font-medium" for="docName">Doctor name</label>
+            <input
+              class="outline-0 border-2 border-gray-200 p-1"
+              type="text"
+              id="docName"
+              formControlName="name"
+              placeholder="Name"
+            />
+            @if (docForm.get('name')?.touched && docForm.get('name')?.invalid) {
+              @if (docForm.get('name')?.hasError('required')) {
+                <p class="text-danger">Doctor name is required</p>
+              } @else {
+                <p class="text-danger">Doctor name is invalid</p>
+              }
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-[80%]">
+            <label class="font-medium" for="docEmail">Doctor Email</label>
+            <input
+              class="outline-0 border-2 border-gray-200 p-1"
+              type="email"
+              id="docName"
+              formControlName="email"
+              placeholder="Email"
+            />
+            @if (docForm.get('email')?.touched && docForm.get('email')?.invalid) {
+              @if (docForm.get('email')?.hasError('required')) {
+                <p class="text-danger">Doctor email is required</p>
+              } @else {
+                <p class="text-danger">Doctor email is invalid</p>
+              }
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-[80%]">
+            <label class="font-medium" for="docPass">Doctor Password</label>
+            <input
+              class="outline-0 border-2 border-gray-200 p-1"
+              type="password"
+              id="docPass"
+              formControlName="password"
+              placeholder="Password"
+            />
+            @if (docForm.get('password')?.touched && docForm.get('password')?.invalid) {
+              @if (docForm.get('password')?.hasError('required')) {
+                <p class="text-danger">Doctor password is required</p>
+              } @else {
+                <p class="text-danger">Doctor password is invalid</p>
+              }
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-[80%]">
+            <label class="font-medium" for="docExp">Experience</label>
+            <input
+              class="outline-0 border-2 border-gray-200 p-1"
+              type="text"
+              id="docExp"
+              formControlName="experience"
+              placeholder="Experience"
+            />
+            @if (docForm.get('experience')?.touched && docForm.get('experience')?.invalid) {
+              @if (docForm.get('experience')?.hasError('required')) {
+                <p class="text-danger">Doctor experience is required</p>
+              } @else {
+                <p class="text-danger">Doctor experience is invalid</p>
+              }
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-[80%]">
+            <label class="font-medium" for="docFee">Consultation Fee</label>
+            <input
+              class="outline-0 border-2 border-gray-200 p-1"
+              type="text"
+              id="docFee"
+              formControlName="consultationFee"
+              placeholder="Fee"
+            />
+            @if (
+              docForm.get('consultationFee')?.touched && docForm.get('consultationFee')?.invalid
+            ) {
+              @if (docForm.get('consultationFee')?.hasError('required')) {
+                <p class="text-danger">Doctor fee is required</p>
+              } @else {
+                <p class="text-danger">Doctor fee is invalid</p>
+              }
+            }
+          </div>
+          <div formGroupName="address">
+            <div class="flex flex-col gap-1 w-[80%]">
+              <label class="font-medium" for="add1">Address 1</label>
+              <input
+                class="outline-0 border-2 border-gray-200 p-1"
+                type="text"
+                id="add1"
+                formControlName="line1"
+                placeholder="Addesss 1"
+              />
+              @if (docForm.get('address.line1')?.touched && docForm.get('address.line1')?.invalid) {
+                @if (docForm.get('address.line1')?.hasError('required')) {
+                  <p class="text-danger">Doctor address is required</p>
+                } @else {
+                  <p class="text-danger">Doctor address is invalid</p>
+                }
+              }
+            </div>
+            <div class="flex flex-col gap-1 w-[80%]">
+              <label class="font-medium" for="add2">Address 2</label>
+              <input
+                class="outline-0 border-2 border-gray-200 p-1"
+                type="text"
+                id="add2"
+                formControlName="line2"
+                placeholder="Addesss 2"
+              />
+              @if (docForm.get('address.line2')?.touched && docForm.get('address.line2')?.invalid) {
+                @if (docForm.get('address.line2')?.hasError('required')) {
+                  <p class="text-danger">Doctor address is required</p>
+                } @else {
+                  <p class="text-danger">Doctor address is invalid</p>
+                }
+              }
+            </div>
+          </div>
+        </div>
+        <!-- right side -->
+        <div class="bg-white flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw]">
+          <div class="flex flex-col gap-1">
+            <p class="font-medium mb-2">Speciality</p>
+            @for (speciality of specialityList; track $index) {
+              <div class="flex gap-1 border-2 border-gray-200 p-1 w-fit">
+                <label class="w-[35vw] md:w-[25vw]" [for]="speciality">{{ speciality }}</label>
+                <input
+                  class="text-3xl"
+                  type="radio"
+                  name="speciality"
+                  [id]="speciality"
+                  [value]="speciality"
+                  formControlName="speciality"
+                />
+              </div>
+            }
+            @if (docForm.get('speciality')?.invalid) {
+              <p class="text-danger">Doctor speciality is required</p>
+            }
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="font-medium mb-1">Education</p>
+            @for (degree of degreeList; track $index) {
+              <div class="flex gap-1 border-2 border-gray-200 p-1 w-fit">
+                <label class="w-[35vw] md:w-[25vw]" [for]="degree">{{ degree }}</label>
+                <input
+                  class="text-3xl"
+                  type="radio"
+                  name="degree"
+                  [id]="degree"
+                  [value]="degree"
+                  formControlName="degree"
+                />
+              </div>
+            }
+            @if (docForm.get('degree')?.invalid) {
+              <p class="text-danger">Doctor education is required</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- doc about -->
+      <div class="flex flex-col gap-1 lg:text-[1.5vw] mt-3">
+        <label class="font-medium" for="about">About</label>
+        <textarea
+          class="w-full min-h-[100px] resize-none outline-0 border-gray-200 border-2 p-1"
+          id="about"
+          formControlName="about"
+          placeholder=" write about the doctor"
+        ></textarea>
+        @if (docForm.get('about')?.touched && docForm.get('about')?.invalid) {
+          @if (docForm.get('about')?.hasError('required')) {
+            <p class="text-danger">Doctor about is required</p>
+          } @else {
+            <p class="text-danger">Doctor about is invalid</p>
+          }
+        }
+      </div>
+      <div class="mt-6 md:text-[1.5vw] text-center">
+        <button
+          class="w-full md:w-[50%] py-3 font-semibold cursor-pointer text-white bg-primary hover:bg-danger"
+        >
+          Add Doctor
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

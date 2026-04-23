@@ -60,11 +60,16 @@
                 <p class="text-secondary">{{ getDate(appointment.date) | date }}</p>
               </div>
             </div>
-
-            <fa-icon
-              class="text-2lg md:text-[1.5vw] cursor-pointer bg-gray-300 border-2 border-red-300 text-danger hover:border-danger"
-              [icon]="xIcon"
-            ></fa-icon>
+            <div class="text-2lg md:text-[1.5vw] flex gap-2">
+              <fa-icon
+                class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
+                [icon]="xIcon"
+              ></fa-icon>
+              <fa-icon
+                class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
+                [icon]="checkIcon"
+              ></fa-icon>
+            </div>
           </li>
         }
       </ul>

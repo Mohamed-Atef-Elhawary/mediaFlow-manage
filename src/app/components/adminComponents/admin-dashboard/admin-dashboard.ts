@@ -11,7 +11,8 @@ import { faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { faBookMedical } from '@fortawesome/free-solid-svg-icons';
 import { faUserInjured } from '@fortawesome/free-solid-svg-icons';
 import { faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -31,7 +32,8 @@ export class AdminDashboard {
   appointIcon = faBookMedical;
   patientIcon = faUserInjured;
   shareIcon = faShareFromSquare;
-  xIcon = faCircleXmark;
+  xIcon = faXmark;
+  checkIcon = faCheck;
   constructor(
     private authAdmin: AuthAdmin,
     private toastr: ToastrService,

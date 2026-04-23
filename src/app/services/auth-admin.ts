@@ -39,4 +39,21 @@ export class AuthAdmin {
       }),
     });
   }
+  appointmentsList(): Observable<APIResponse> {
+    const token = this.adminInfo()?.token;
+    return this.http.get<APIResponse>(`${environment.backendUrl}admin/appointmentlist`, {
+      headers: new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      }),
+    });
+  }
+
+  doctorsList(): Observable<APIResponse> {
+    const token = this.adminInfo()?.token;
+    return this.http.get<APIResponse>(`${environment.backendUrl}admin/doctorlist`, {
+      headers: new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      }),
+    });
+  }
 }

@@ -1,4 +1,5 @@
 export interface AppointmentData {
+  _id: string;
   userId: string;
   docId: string;
   appointmentDate: string;
