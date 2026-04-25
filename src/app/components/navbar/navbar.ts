@@ -43,4 +43,9 @@ export class Navbar implements OnInit {
     // this.adminImage = adminImage;
   }
   // }
+
+  logout() {
+    this.authAdmin.logOut();
+    this.authService.authView.set('outer');
+  }
 }

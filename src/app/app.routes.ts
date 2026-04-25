@@ -50,10 +50,4 @@ export const routes: Routes = [
     path: 'doctor',
     loadComponent: () => import('./pages/doctor-layout/doctor-layout').then((c) => c.DoctorLayout),
   },
-
-  {
-    path: 'add',
-    loadComponent: () =>
-      import('./components/adminComponents/add-doctor/add-doctor').then((c) => c.AddDoctor),
-  },
 ];

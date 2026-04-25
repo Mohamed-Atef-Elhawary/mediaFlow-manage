@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, Signal, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Footer } from './components/footer/footer';
 import { Navbar } from './components/navbar/navbar';
 import { AuthService } from './services/auth-service';
+import { AuthType } from './types/AuthType';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, Navbar],
+  imports: [RouterOutlet, Footer, Navbar, NgClass],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -24,8 +26,15 @@ export class App {
     //   }
     // }
   }
+  view: Signal<AuthType> = computed(() => this.authService.authView());
+
   ngOnInit() {
-    console.log(this.authService.authView());
-    console.log(this.authService.authLogger());
+    if (this.view() === 'outer') {
+      this.router.navigate(['/outer']);
+    } else if (this.view() === 'authorized') {
+      if (this.authService.authLogger() === 'admin') {
+        this.router.navigate(['/admin']);
+      }
+    }
   }
 }

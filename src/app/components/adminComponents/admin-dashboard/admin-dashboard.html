@@ -49,7 +49,7 @@
         <p class="font-semibold">Latest Appointment</p>
       </div>
       <ul>
-        @for (appointment of dashData().latestAppointments; track appointment._id) {
+        @for (appointment of dashData().latestAppointments; let i = $index; track appointment._id) {
           <li class="border-2 border-t-0 border-gray-200 p-4 flex justify-between items-center">
             <div class="flex gap-2 items-center">
               <div class="size-12 md:w-[3vw] md:h-[3vw] overflow-hidden">
@@ -61,14 +61,22 @@
               </div>
             </div>
             <div class="text-2lg md:text-[1.5vw] flex gap-2">
-              <fa-icon
-                class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
-                [icon]="xIcon"
-              ></fa-icon>
-              <fa-icon
-                class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
-                [icon]="checkIcon"
-              ></fa-icon>
+              @if (appointment.isCompleted) {
+                <p class="text-secondary">completed</p>
+              } @else if (appointment.cancelled) {
+                <p class="text-secondary">cancelled</p>
+              } @else {
+                <fa-icon
+                  (click)="cancelAppointment(appointment._id)"
+                  class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
+                  [icon]="xIcon"
+                ></fa-icon>
+                <fa-icon
+                  (click)="completeAppointment(appointment._id, i)"
+                  class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
+                  [icon]="checkIcon"
+                ></fa-icon>
+              }
             </div>
           </li>
         }

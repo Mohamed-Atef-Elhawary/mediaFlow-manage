@@ -12,10 +12,3 @@ export interface AddDoctorData {
   about: string;
   imgFile: Express.Multer.File;
 }
-// npm install --save-dev @types/express @types/multer
-// {
-//   "compilerOptions": {
-//     "types": ["node", "express", "multer"],
-//     // إعدادات أخرى...
-//   }
-// }

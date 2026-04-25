@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { AuthAdmin } from '../../../services/auth-admin';
 import { AppointmentData } from '../../../interfaces/appointment-data';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +22,7 @@ export class AddminAppoinments implements OnInit {
   constructor(
     private authAdmin: AuthAdmin,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef,
   ) {}
   ngOnInit(): void {
     this.authAdmin.appointmentsList().subscribe({
@@ -44,5 +45,51 @@ export class AddminAppoinments implements OnInit {
     let year: number = new Date().getFullYear();
     let dob = new Date(Number(date));
     return year - dob.getFullYear();
+  }
+
+  cancelAppointment(id: string, index: number) {
+    this.authAdmin.cancelAppointment(id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.allAppointments.update((value) => {
+            value[index]['cancelled'] = true;
+            return value;
+          });
+          this.cdr.detectChanges();
+          this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
+
+          console.log(res);
+        } else {
+          this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
+
+          console.log(res);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+      },
+    });
+  }
+  completeAppointment(id: string, index: number) {
+    this.authAdmin.completeAppointment(id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.allAppointments.update((value) => {
+            value[index].isCompleted = true;
+            return value;
+          });
+          this.cdr.detectChanges();
+          this.toastr.success(res.message, 'completed', toastrConfig.successConfig);
+          console.log(res);
+        } else {
+          this.toastr.error(res.message, 'error', toastrConfig.errorConfig);
+
+          console.log(res);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'error', toastrConfig.errorConfig);
+      },
+    });
   }
 }

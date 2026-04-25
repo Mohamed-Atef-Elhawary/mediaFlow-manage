@@ -53,14 +53,22 @@
           class="flex flex-col gap-1 items-center md:text-[1.4vw] w-[70px] md:w-[10vw] text-center"
         >
           <!-- <div class="text-2lg md:text-[1.5vw] flex gap-2"> -->
-          <fa-icon
-            class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
-            [icon]="xIcon"
-          ></fa-icon>
-          <fa-icon
-            class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
-            [icon]="checkIcon"
-          ></fa-icon>
+          @if (appointment.cancelled) {
+            <p class="text-secondary">canceld</p>
+          } @else if (appointment.isCompleted) {
+            <p class="text-secondary">completed</p>
+          } @else {
+            <fa-icon
+              (click)="cancelAppointment(appointment._id, num)"
+              class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
+              [icon]="xIcon"
+            ></fa-icon>
+            <fa-icon
+              (click)="completeAppointment(appointment._id, num)"
+              class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
+              [icon]="checkIcon"
+            ></fa-icon>
+          }
           <!-- </div> -->
         </div>
       </div>

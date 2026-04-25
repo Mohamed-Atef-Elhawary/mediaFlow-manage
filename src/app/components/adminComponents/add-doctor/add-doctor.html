@@ -1,16 +1,24 @@
 <div class="p-4 bg-gray-50">
   <h1 class="tex-lg md:text-[1.5vw] font-semibold">Add Doctor</h1>
   <div class="mt-6 border-2 border-gray-200 p-4">
-    <form [formGroup]="docForm" (ngSubmit)="submit()">
+    <form [formGroup]="docForm" (ngSubmit)="submit($event)" appFirstInvalid>
       <!-- doc img -->
-      <div class="w-fit">
+      <div class="w-fit md:w-[50%] lg:text-[1.5vw]">
         <label for="docImg">
-          <div class="flex gap-2 cursor-pointer">
-            <fa-icon [icon]="docIcon"></fa-icon>
+          <div class="flex gap-2 items-center cursor-pointer">
+            @if (showImg()) {
+              <img
+                class="w-[60px] h-[60px] md:w-[5vw] md:h-[5vw] rounded-full shrink-0"
+                [src]="docImg"
+                alt=""
+              />
+            } @else {
+              <fa-icon class="text-primary" [icon]="docIcon"></fa-icon>
+            }
             <p>Upload doctor picture</p>
           </div>
         </label>
-        <input class="hidden" type="file" id="docImg" />
+        <input class="hidden" type="file" id="docImg" (change)="imgUploaded($event)" />
       </div>
 
       <div class="flex flex-col md:flex-row gap-6 mt-6">
@@ -71,7 +79,7 @@
             <label class="font-medium" for="docExp">Experience</label>
             <input
               class="outline-0 border-2 border-gray-200 p-1"
-              type="text"
+              type="number"
               id="docExp"
               formControlName="experience"
               placeholder="Experience"
@@ -88,7 +96,7 @@
             <label class="font-medium" for="docFee">Consultation Fee</label>
             <input
               class="outline-0 border-2 border-gray-200 p-1"
-              type="text"
+              type="number"
               id="docFee"
               formControlName="consultationFee"
               placeholder="Fee"
@@ -103,7 +111,7 @@
               }
             }
           </div>
-          <div formGroupName="address">
+          <div formGroupName="address" appFirstInvalid>
             <div class="flex flex-col gap-1 w-[80%]">
               <label class="font-medium" for="add1">Address 1</label>
               <input
@@ -157,7 +165,7 @@
                 />
               </div>
             }
-            @if (docForm.get('speciality')?.invalid) {
+            @if (docForm.get('speciality')?.touched && docForm.get('speciality')?.invalid) {
               <p class="text-danger">Doctor speciality is required</p>
             }
           </div>
@@ -176,7 +184,7 @@
                 />
               </div>
             }
-            @if (docForm.get('degree')?.invalid) {
+            @if (docForm.get('degree')?.touched && docForm.get('degree')?.invalid) {
               <p class="text-danger">Doctor education is required</p>
             }
           </div>

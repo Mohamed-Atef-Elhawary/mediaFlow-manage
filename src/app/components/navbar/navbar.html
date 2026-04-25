@@ -7,9 +7,16 @@
             <img [src]="logo" alt="" />
           </div>
         </div>
-        <p>{{ loger().toUpperCase() }}</p>
+        <p class="text-secondary font-medium border-2 p-2 rounded-xl lg:text-[1.4vw]">
+          {{ loger().toUpperCase() }}
+        </p>
         <div>
-          <button>Logout</button>
+          <button
+            (click)="logout()"
+            class="font-medium bg-primary p-2 rounded-xl text-white cursor-pointer lg:text-[1.4vw]"
+          >
+            Logout
+          </button>
         </div>
       </div>
 

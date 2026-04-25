@@ -1,4 +1,11 @@
-import { Component, computed, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { AuthAdmin } from '../../../services/auth-admin';
 import { DashData } from '../../../interfaces/dash-data';
 import { APIResponse } from '../../../interfaces/apiresponse';
@@ -34,9 +41,11 @@ export class AdminDashboard {
   shareIcon = faShareFromSquare;
   xIcon = faXmark;
   checkIcon = faCheck;
+
   constructor(
     private authAdmin: AuthAdmin,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -44,7 +53,7 @@ export class AdminDashboard {
       next: (res: APIResponse) => {
         if (res.success && res.data) {
           this.dashData.set(res.data);
-          console.log(this.dashData());
+          // console.log(this.dashData());
         } else {
           console.log(res);
         }
@@ -57,5 +66,55 @@ export class AdminDashboard {
   }
   getDate(date: string): Date {
     return new Date(Number(date));
+  }
+  cancelAppointment(id: string) {
+    this.authAdmin.cancelAppointment(id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.dashData.update((value) => {
+            value.latestAppointments.map((appointment) => {
+              if (appointment._id === id) {
+                appointment.cancelled = true;
+              }
+              return appointment;
+            });
+            return value;
+          });
+          this.cdr.detectChanges();
+          this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
+
+          console.log(res);
+        } else {
+          this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
+
+          console.log(res);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+      },
+    });
+  }
+  completeAppointment(id: string, index: number) {
+    this.authAdmin.completeAppointment(id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.dashData.update((value) => {
+            value.latestAppointments[index].isCompleted = true;
+            return value;
+          });
+          this.cdr.detectChanges();
+          this.toastr.success(res.message, 'completed', toastrConfig.successConfig);
+          console.log(res);
+        } else {
+          this.toastr.error(res.message, 'error', toastrConfig.errorConfig);
+
+          console.log(res);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'error', toastrConfig.errorConfig);
+      },
+    });
   }
 }
