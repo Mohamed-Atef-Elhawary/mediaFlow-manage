@@ -42,14 +42,18 @@
       </div>
     </article>
   </div>
-  @if (dashData().latestAppointments.length) {
+  @if (dashData().completedAppointments?.length) {
     <div class="mt-6">
       <div class="flex gap-2 border-2 border-gray-200 p-2 md:text-[1.3vw]">
         <fa-icon class="text-primary" [icon]="shareIcon"></fa-icon>
-        <p class="font-semibold">Latest Appointment</p>
+        <p class="font-semibold">completed Appointment</p>
       </div>
       <ul>
-        @for (appointment of dashData().latestAppointments; let i = $index; track appointment._id) {
+        @for (
+          appointment of dashData().completedAppointments;
+          let i = $index;
+          track appointment._id
+        ) {
           <li class="border-2 border-t-0 border-gray-200 p-4">
             <div class="flex gap-2 items-center">
               <div class="size-12 md:w-[3vw] md:h-[3vw] overflow-hidden">

@@ -1,5 +1,6 @@
 export interface DashData {
-  latestAppointments: any[];
+  latestAppointments?: any[];
+  completedAppointments?: any[];
   numberOdDoctors?: number;
   money?: number;
   numberOfAppointments: number;

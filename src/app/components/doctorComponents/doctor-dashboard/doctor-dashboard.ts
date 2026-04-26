@@ -25,7 +25,7 @@ import { AuthDoctor } from '../../../services/auth-doctor';
 })
 export class DoctorDashboard {
   dashData: WritableSignal<DashData> = signal({
-    latestAppointments: [],
+    completedAppointments: [],
     money: 0,
     numberOfAppointments: 0,
     numberOfPatients: 0,

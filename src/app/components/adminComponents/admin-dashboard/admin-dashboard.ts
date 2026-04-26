@@ -65,7 +65,7 @@ export class AdminDashboard {
       next: (res) => {
         if (res.success) {
           this.dashData.update((value) => {
-            value.latestAppointments.map((appointment) => {
+            value.latestAppointments?.map((appointment) => {
               if (appointment._id === id) {
                 appointment.cancelled = true;
               }
@@ -93,7 +93,10 @@ export class AdminDashboard {
       next: (res) => {
         if (res.success) {
           this.dashData.update((value) => {
-            value.latestAppointments[index].isCompleted = true;
+            if (value.latestAppointments) {
+              value.latestAppointments[index].isCompleted = true;
+            }
+
             return value;
           });
           this.cdr.detectChanges();

@@ -1,1 +1,66 @@
-<p>doctor-appointments works!</p>
+<div class="p-4 bg-gray-50">
+  <h1 class="tex-lg md:text-[1.5vw] font-semibold">All Appointments</h1>
+  @if (allAppointments().length) {
+    <div
+      class="mt-4 border-2 border-gray-200 flex justify-between shrink-0 p-2 text-sm md:text-[1.4vw] text-center text-dark font-medium"
+    >
+      <p class="w-[100px] md:w-[10vw] hidden md:block">Number</p>
+      <p class="w-[100px] md:w-[10vw]">Patient</p>
+      <p class="w-[100px] md:w-[10vw] hidden md:block">Age</p>
+      <p class="w-[100px] md:w-[10vw]">Day-Time</p>
+      <p class="w-[100px] md:w-[10vw] hidden md:block">Price</p>
+      <p class="w-[100px] md:w-[10vw]">Action</p>
+    </div>
+    @for (appointment of allAppointments(); track appointment._id; let num = $index) {
+      <div
+        class="border-2 border-gray-200 border-t-0 flex justify-between items-center shrink-0 p-2 text-secondary text-center"
+      >
+        <p class="md:text-[1.4vw] md:w-[10vw] hidden md:block">{{ num + 1 }}</p>
+
+        <div class="flex flex-col gap-1 items-center text-sm md:text-[1.4vw] w-[100px] md:w-[10vw]">
+          <div class="size-12 md:w-[3vw] md:h-[3vw] overflow-hidden">
+            <img class="w-full h-full object-cover" [src]="appointment.userData.image" alt="" />
+          </div>
+          <p>{{ appointment.userData.name }}</p>
+        </div>
+        <p class="md:text-[1.4vw] md:w-[10vw] hidden md:block">
+          {{ getAge(appointment.userData.dateOfBirth) }}
+        </p>
+        <div class="flex flex-col gap-1 text-sm md:text-[1.2vw] w-[100px] md:w-[10vw] text-start">
+          <p>
+            Day: <span class="text-dark">{{ appointment.appointmentDate }}</span>
+          </p>
+          <p class="">
+            Time: <span class="text-dark">{{ appointment.appointmentTime }}</span>
+          </p>
+        </div>
+
+        <p class="md:text-[1.4vw] md:w-[10vw] text-center hidden md:block">
+          {{ appointment.price }}
+        </p>
+        <div
+          class="flex flex-col gap-1 items-center md:text-[1.4vw] w-[100px] md:w-[10vw] text-center"
+        >
+          <!-- <div class="text-2lg md:text-[1.5vw] flex gap-2"> -->
+          @if (appointment.cancelled) {
+            <p class="text-secondary">canceled</p>
+          } @else if (appointment.isCompleted) {
+            <p class="text-secondary">completed</p>
+          } @else {
+            <fa-icon
+              (click)="cancelAppointment(appointment._id, num)"
+              class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
+              [icon]="xIcon"
+            ></fa-icon>
+            <fa-icon
+              (click)="completeAppointment(appointment._id, num)"
+              class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"
+              [icon]="checkIcon"
+            ></fa-icon>
+          }
+          <!-- </div> -->
+        </div>
+      </div>
+    }
+  }
+</div>
