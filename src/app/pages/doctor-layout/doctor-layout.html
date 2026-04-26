@@ -1,1 +1,8 @@
-<p>doctor-layout works!</p>
+<div class="flex flex-col gap-4 md:grid grid-cols-8 h-full">
+  <div class="md:col-span-2 bg-gray-100">
+    <app-doctor-sidebar></app-doctor-sidebar>
+  </div>
+  <div class="md:col-span-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>

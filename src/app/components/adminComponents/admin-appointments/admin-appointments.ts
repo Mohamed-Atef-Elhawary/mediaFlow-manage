@@ -12,8 +12,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-addmin-appoinments',
   imports: [FontAwesomeModule],
-  templateUrl: './admin-appoinments.html',
-  styleUrl: './admin-appoinments.css',
+  templateUrl: './admin-appointments.html',
+  styleUrl: './admin-appointments.css',
 })
 export class AddminAppoinments implements OnInit {
   allAppointments: WritableSignal<AppointmentData[]> = signal([]);

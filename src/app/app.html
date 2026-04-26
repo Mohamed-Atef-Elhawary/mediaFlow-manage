@@ -3,7 +3,7 @@
     <app-navbar></app-navbar>
   </div>
   <div
-    [ngClass]="{ 'pt-[60px] lg:pt-[5vw]': view() === 'authorized' }"
+    [ngClass]="{ 'pt-[60px] lg:pt-[5vw]': view() === 'authorized' || view() === 'logged' }"
     class="mx-[2vw] sm:mx-[5vw] h-screen flex flex-col justify-between"
   >
     <div class="grow">

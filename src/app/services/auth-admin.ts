@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { APIResponse } from '../interfaces/apiresponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { AdminInfo } from '../interfaces/admin-info';
+import { AdminInfo } from '../interfaces/loggerInfo';
 import { AddDoctorData } from '../interfaces/add-doctor-data';
 import { AuthService } from './auth-service';
 import { Router } from '@angular/router';
@@ -18,16 +18,16 @@ export class AuthAdmin {
   ) {}
   adminInfo: WritableSignal<AdminInfo | null> = signal<AdminInfo | null>(this.getInfo());
 
-  setInfo(data: AdminInfo): void {
-    localStorage.setItem('adminInfo', JSON.stringify(data));
-    this.adminInfo.set(data);
-  }
   getInfo(): AdminInfo | null {
     let adminInfo = localStorage.getItem('adminInfo');
     if (adminInfo) {
       return JSON.parse(adminInfo);
     }
     return null;
+  }
+  setInfo(data: AdminInfo): void {
+    localStorage.setItem('adminInfo', JSON.stringify(data));
+    this.adminInfo.set(data);
   }
   // removeInfo(): void {
   //   localStorage.removeItem('adminInfo');
@@ -37,7 +37,7 @@ export class AuthAdmin {
   login(data: LoginApi): Observable<APIResponse> {
     return this.http.post<APIResponse>(`${environment.backendUrl}admin/login`, data);
   }
-  logOut() {
+  logout() {
     localStorage.removeItem('adminInfo');
     this.adminInfo.set(null);
 

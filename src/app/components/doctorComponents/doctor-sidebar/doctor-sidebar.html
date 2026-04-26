@@ -2,7 +2,7 @@
   <div>
     <ul class="flex flex-col gap-2">
       <li
-        routerLink="/admin/dashboard"
+        routerLink="/doctor/dashboard"
         routerLinkActive="border-r-4 border-danger bg-primary text-white active"
         class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
       >
@@ -10,7 +10,7 @@
         <p>Dashboard</p>
       </li>
       <li
-        routerLink="/admin/appointment"
+        routerLink="/doctor/appointment"
         routerLinkActive="border-r-4 border-danger bg-primary text-white active"
         class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
       >
@@ -18,20 +18,12 @@
         <p>Appointments</p>
       </li>
       <li
-        routerLink="/admin/add"
+        routerLink="/doctor/profile"
         routerLinkActive="border-r-4 border-danger bg-primary text-white active"
         class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
       >
-        <fa-icon [icon]="addIcon"></fa-icon>
-        <p>Add Doctor</p>
-      </li>
-      <li
-        routerLink="/admin/list"
-        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
-        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
-      >
-        <fa-icon [icon]="listIcon"></fa-icon>
-        <p>Doctors List</p>
+        <fa-icon [icon]="profileIcon"></fa-icon>
+        <p>Profile</p>
       </li>
     </ul>
   </div>

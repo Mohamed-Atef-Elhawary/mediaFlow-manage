@@ -1,1 +1,1 @@
-export type AuthType = 'outer' | 'login' | 'authorized';
+export type AuthType = 'outer' | 'login' | 'authorized' | 'logged';

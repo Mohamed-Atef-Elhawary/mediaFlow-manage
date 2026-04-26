@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 import { LoginType } from '../../types/LoginType';
 import { LoginApi } from '../../interfaces/login-api';
 import { AuthAdmin } from '../../services/auth-admin';
+import { AuthDoctor } from '../../services/auth-doctor';
 
 @Component({
   selector: 'app-login',
@@ -21,9 +22,9 @@ export class Login implements OnInit {
   logo: string;
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private authService: AuthService,
     private authAdmin: AuthAdmin,
+    private authDoctor: AuthDoctor,
     private photo: PhotoService,
     private toastr: ToastrService,
     private router: Router,
@@ -34,14 +35,14 @@ export class Login implements OnInit {
 
   ngOnInit() {
     console.log(this.authService.authView());
-    this.cleareLoginForm();
+    this.makeForm();
   }
 
   update(logger: LoginType) {
     this.authService.authLogger.set(logger);
   }
 
-  cleareLoginForm() {
+  makeForm() {
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -95,5 +96,22 @@ export class Login implements OnInit {
       },
     });
   }
-  doctorLogin(data: LoginApi) {}
+  doctorLogin(data: LoginApi) {
+    this.authDoctor.login(data).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.authDoctor.setInfo(res.data);
+          this.authService.authView.set('authorized');
+          this.router.navigate(['/doctor']);
+        } else {
+          console.log(res);
+          this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+      },
+    });
+  }
 }

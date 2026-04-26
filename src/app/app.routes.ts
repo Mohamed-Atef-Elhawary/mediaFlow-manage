@@ -29,7 +29,7 @@ export const routes: Routes = [
       {
         path: 'appointment',
         loadComponent: () =>
-          import('./components/adminComponents/admin-appoinments/admin-appoinments').then(
+          import('./components/adminComponents/admin-appointments/admin-appointments').then(
             (c) => c.AddminAppoinments,
           ),
       },
@@ -49,5 +49,31 @@ export const routes: Routes = [
   {
     path: 'doctor',
     loadComponent: () => import('./pages/doctor-layout/doctor-layout').then((c) => c.DoctorLayout),
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./components/doctorComponents/doctor-dashboard/doctor-dashboard').then(
+            (c) => c.DoctorDashboard,
+          ),
+      },
+
+      {
+        path: 'appointment',
+        loadComponent: () =>
+          import('./components/doctorComponents/doctor-appointments/doctor-appointments').then(
+            (c) => c.DoctorAppointments,
+          ),
+      },
+
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/doctorComponents/doctor-profile/doctor-profile').then(
+            (c) => c.DoctorProfile,
+          ),
+      },
+    ],
   },
 ];

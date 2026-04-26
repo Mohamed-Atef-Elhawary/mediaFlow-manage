@@ -4,6 +4,7 @@ import { PhotoService } from '../../services/photoservice';
 import { LoginType } from '../../types/LoginType';
 import { AuthAdmin } from '../../services/auth-admin';
 import { AuthDoctor } from '../../services/auth-doctor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,12 @@ import { AuthDoctor } from '../../services/auth-doctor';
 })
 export class Navbar implements OnInit {
   logo: string;
-
   doctorImage!: string;
   constructor(
     private authService: AuthService,
     private authAdmin: AuthAdmin,
     private authDoctor: AuthDoctor,
+    private router: Router,
     private photo: PhotoService,
   ) {
     this.logo = this.photo.static.logo1;
@@ -31,7 +32,9 @@ export class Navbar implements OnInit {
   });
 
   loger: Signal<LoginType> = computed(() => this.authService.authLogger());
-  display: Signal<boolean> = computed(() => this.authService.authView() === 'authorized');
+  display: Signal<boolean> = computed(
+    () => this.authService.authView() === 'authorized' || this.authService.authView() === 'logged',
+  );
 
   ngOnInit(): void {
     this.getImages();
@@ -45,7 +48,12 @@ export class Navbar implements OnInit {
   // }
 
   logout() {
-    this.authAdmin.logOut();
+    if (this.authService.authLogger() === 'admin') {
+      this.authAdmin.logout();
+    } else if (this.authService.authLogger() === 'doctor') {
+      this.authDoctor.logout();
+    }
     this.authService.authView.set('outer');
+    this.router.navigate(['/outer']);
   }
 }
