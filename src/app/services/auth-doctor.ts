@@ -5,6 +5,7 @@ import { APIResponse } from '../interfaces/apiresponse';
 import { LoginApi } from '../interfaces/login-api';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { UpdateDoctorData } from '../interfaces/update-doctor-data';
 
 @Injectable({
   providedIn: 'root',
@@ -71,5 +72,24 @@ export class AuthDoctor {
         }),
       },
     );
+  }
+
+  getProfile(): Observable<APIResponse> {
+    const token = this.doctorInfo()?.token;
+    return this.http.get<APIResponse>(`${environment.backendUrl}doctor/profile`, {
+      headers: new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      }),
+    });
+  }
+
+  updateProfile(docData: FormData): Observable<APIResponse> {
+    const token = this.doctorInfo()?.token;
+    console.log('token ', token);
+    return this.http.post<APIResponse>(`${environment.backendUrl}doctor/update`, docData, {
+      headers: new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      }),
+    });
   }
 }

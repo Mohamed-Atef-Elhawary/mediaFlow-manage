@@ -32,9 +32,7 @@ export class Navbar implements OnInit {
   });
 
   loger: Signal<LoginType> = computed(() => this.authService.authLogger());
-  display: Signal<boolean> = computed(
-    () => this.authService.authView() === 'authorized' || this.authService.authView() === 'logged',
-  );
+  display: Signal<boolean> = computed(() => this.authService.authView() === 'authorized');
 
   ngOnInit(): void {
     this.getImages();

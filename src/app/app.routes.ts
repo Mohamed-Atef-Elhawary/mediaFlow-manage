@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { outerGuard } from './guards/outer-guard';
 import { loginGuard } from './guards/login-guard';
+import { docProfileDataResolver } from './resolvers/doc-profile-data-resolver';
 
 export const routes: Routes = [
   {
@@ -73,6 +74,7 @@ export const routes: Routes = [
           import('./components/doctorComponents/doctor-profile/doctor-profile').then(
             (c) => c.DoctorProfile,
           ),
+        resolve: { docResolver: docProfileDataResolver },
       },
     ],
   },

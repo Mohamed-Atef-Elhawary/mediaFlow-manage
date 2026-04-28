@@ -17,15 +17,7 @@ export class App {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {
-    // if (this.authService.authView() === 'outer') {
-    //   this.router.navigate(['/outer']);
-    // } else if (this.authService.authView() === 'authorized') {
-    //   if (this.authService.authLogger() === 'admin') {
-    //     this.router.navigate(['/admin']);
-    //   }
-    // }
-  }
+  ) {}
   view: Signal<AuthType> = computed(() => this.authService.authView());
 
   ngOnInit() {
@@ -38,8 +30,6 @@ export class App {
       } else if (this.authService.authLogger() === 'doctor') {
         this.router.navigate(['/doctor']);
       }
-
-      this.authService.authView.set('logged');
     }
   }
 }

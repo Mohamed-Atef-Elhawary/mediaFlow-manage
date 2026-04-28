@@ -1,1 +1,144 @@
-<p>doctor-profile works!</p>
+<div class="min-h-[50vh] pb-1">
+  <form [formGroup]="docForm" (ngSubmit)="submit()" appFirstInvalid>
+    <div class="w-full h-[50vw] sm:h-[30vw]">
+      <label
+        [ngClass]="{ 'pointer-events-none': updateDocInfo(), 'cursor-pointer': !updateDocInfo() }"
+        class=""
+        for="doc-img"
+      >
+        <img class="w-full h-full object-cover" [src]="docData()?.image" alt="" />
+      </label>
+      <input class="hidden" (change)="fileUploaded($event)" type="file" id="doc-img" />
+    </div>
+    <div class="flex flex-col gap-4">
+      <section>
+        <h1 class="text-lg sm:text-[2vw] text-secondary font-semibold">{{ docData()?.name }}</h1>
+        <p class="sm:text-[1.5vw] text-dark font-medium">
+          {{ docData()?.degree }} - {{ docData()?.speciality }}
+          <span class="text-gray-300 border-2 px-1 rounded-lg"
+            >{{ docData()?.experience }} Year</span
+          >
+        </p>
+      </section>
+
+      <section>
+        <h2 class="sm:text-[1.5vw] text-dark">About</h2>
+        <p class="sm:text-[1.3vw] text-gray-300">{{ docData()?.about }}</p>
+      </section>
+
+      <div
+        [ngClass]="{ 'flex flex-col gap-1': !updateDocInfo() }"
+        class="sm:text-[1.5vw] text-dark font-medium"
+      >
+        <span>consultation Fee:</span>
+        <span [hidden]="!updateDocInfo()">{{ docData()?.consultationFee | currency: 'EGP' }}</span>
+        <div [hidden]="updateDocInfo()">
+          <input
+            class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"
+            type="number"
+            formControlName="consultationFee"
+          />
+          @if (docForm.get('consultationFee')?.touched && docForm.get('consultationFee')?.invalid) {
+            @if (docForm.get('consultationFee')?.hasError('required')) {
+              <p class="text-danger">Doctor fee is required</p>
+            } @else {
+              <p class="text-danger">Doctor fee is invalid</p>
+            }
+          }
+        </div>
+      </div>
+
+      <section
+        [ngClass]="{ 'flex flex-col': !updateDocInfo(), 'flex flex-row': updateDocInfo() }"
+        class="gap-1"
+      >
+        <h2 class="sm:text-[1.5vw] text-dark font-medium">Address:</h2>
+        <div class="sm:text-[1.3vw] text-secondary">
+          <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line1 }}</p>
+          <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line2 }}</p>
+          <div formGroupName="address" [hidden]="updateDocInfo()" class="flex flex-col gap-1">
+            <div>
+              <label class="font-medium" for="add1">Address 1</label>
+              <input
+                class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"
+                type="text"
+                id="add1"
+                formControlName="line1"
+              />
+              @if (docForm.get('address.line1')?.touched && docForm.get('address.line1')?.invalid) {
+                @if (docForm.get('address.line1')?.hasError('required')) {
+                  <p class="text-danger">Doctor address is required</p>
+                } @else {
+                  <p class="text-danger">Doctor address is invalid</p>
+                }
+              }
+            </div>
+            <div>
+              <label class="font-medium" for="add2">Address 2</label>
+              <input
+                class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"
+                type="text"
+                id="add2"
+                formControlName="line2"
+              />
+              @if (docForm.get('address.line2')?.touched && docForm.get('address.line2')?.invalid) {
+                @if (docForm.get('address.line2')?.hasError('required')) {
+                  <p class="text-danger">Doctor address is required</p>
+                } @else {
+                  <p class="text-danger">Doctor address is invalid</p>
+                }
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+      @if (updateDocInfo()) {
+        @if (docData()?.available) {
+          <div class="flex gap-1 sm:text-[1.5vw]">
+            <fa-icon class="text-primary" [icon]="availableIcon"></fa-icon>
+            <p>Available</p>
+          </div>
+        } @else {
+          <div class="flex gap-1 sm:text-[1.5vw]">
+            <fa-icon class="text-secondary" [icon]="notAvailableIcon"></fa-icon>
+            <p>Not Available</p>
+          </div>
+        }
+      } @else {
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-1 border-2 border-sky-200 p-1 w-fit">
+            <label class="w-[35vw] md:w-[25vw]" for="av">Available</label>
+            <input
+              class="text-3xl"
+              type="radio"
+              name="available"
+              [value]="true"
+              formControlName="available"
+              id="av"
+            />
+          </div>
+          <div class="flex gap-1 border-2 border-sky-200 p-1 w-fit">
+            <label class="w-[35vw] md:w-[25vw]" for="notav">Not available</label>
+            <input
+              class="text-3xl"
+              type="radio"
+              name="available"
+              [value]="false"
+              formControlName="available"
+              id="notav"
+            />
+          </div>
+        </div>
+      }
+      <div class="sm:text-[1.5vw]">
+        <button
+          (click)="updateDocInfoState()"
+          [ngClass]="updateDocInfo() ? 'bg-danger' : 'bg-primary'"
+          class="bg-amber-400 py-2 px-1 w-[100px] sm:px-0 sm:w-[25%] rounded-lg text-white font-semibold cursor-pointer"
+        >
+          {{ updateDocInfo() ? 'Update' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

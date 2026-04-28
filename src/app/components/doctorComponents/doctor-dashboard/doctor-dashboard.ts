@@ -39,6 +39,7 @@ export class DoctorDashboard {
   constructor(
     private authDoctor: AuthDoctor,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -46,7 +47,10 @@ export class DoctorDashboard {
       next: (res: APIResponse) => {
         if (res.success && res.data) {
           this.dashData.set(res.data);
+          this.cdr.detectChanges();
+          console.log(res.data);
           console.log(this.dashData());
+          console.log(this.dashData().completedAppointments);
         } else {
           console.log(res);
         }

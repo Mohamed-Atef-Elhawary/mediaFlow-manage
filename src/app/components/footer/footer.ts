@@ -18,9 +18,7 @@ export class Footer {
     // this.logo = this.photo.static.logo;
   }
 
-  display = computed(
-    () => this.auth.authView() === 'authorized' || this.auth.authView() === 'logged',
-  );
+  display = computed(() => this.auth.authView() === 'authorized');
   // console.log('from outer ', this.auth.authView());
 }
 /**

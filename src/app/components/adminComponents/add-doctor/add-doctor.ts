@@ -41,7 +41,7 @@ export class AddDoctor implements OnInit {
 
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
       experience: ['', [Validators.required, Validators.min(0), Validators.max(30)]],
-      consultationFee: ['', [Validators.required, Validators.min(1)]],
+      consultationFee: ['', [Validators.required, Validators.min(1), Validators.max(1000000)]],
       speciality: ['', [Validators.required]],
       degree: ['', [Validators.required]],
       address: this.fb.group({

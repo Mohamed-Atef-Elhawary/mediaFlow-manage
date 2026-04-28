@@ -20,10 +20,8 @@ export class AuthService {
   }
 
   setAuthView() {
-    if (this.authAdmin.adminInfo()) {
-      this.authView.set('logged');
-    } else if (this.authDoctor.doctorInfo()) {
-      this.authView.set('logged');
+    if (this.authAdmin.adminInfo() || this.authDoctor.doctorInfo()) {
+      this.authView.set('authorized');
     } else {
       this.authView.set('outer');
     }
