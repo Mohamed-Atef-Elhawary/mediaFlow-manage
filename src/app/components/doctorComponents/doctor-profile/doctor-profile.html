@@ -1,5 +1,5 @@
 <div class="min-h-[50vh] pb-1">
-  <form [formGroup]="docForm" (ngSubmit)="submit()" appFirstInvalid>
+  <form class="flex flex-col gap-4" [formGroup]="docForm" (ngSubmit)="submit()" appFirstInvalid>
     <div class="w-full h-[50vw] sm:h-[30vw]">
       <label
         [ngClass]="{ 'pointer-events-none': updateDocInfo(), 'cursor-pointer': !updateDocInfo() }"
@@ -10,6 +10,55 @@
       </label>
       <input class="hidden" (change)="fileUploaded($event)" type="file" id="doc-img" />
     </div>
+    <!-- srart docRank -->
+    <div class="flex gap-4">
+      <!-- startrank -->
+      <div class="w-fit sm:w-[20%] shrink-0">
+        <p class="text-[50px]">{{ docRank().rank.decimal }}.{{ docRank().rank.frag }}</p>
+        <div class="flex gap-[2px]">
+          @for (rank of [1, 2, 3, 4, 5]; track $index) {
+            <div class="relative w-fit">
+              <div class="text-gray-300">
+                <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
+              </div>
+
+              @if (rank <= docRank().rank.decimal) {
+                <div class="absolute top-0 left-0 overflow-hidden text-primary">
+                  <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
+                </div>
+              } @else if (rank === docRank().rank.decimal + 1) {
+                <div
+                  [ngStyle]="{ width: docRank().rank.frag * 10 + '%' }"
+                  class="absolute top-0 left-0 overflow-hidden text-primary"
+                >
+                  <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <p class="text-secondary">Reviewers {{ docRank().totalReviewers }}</p>
+      </div>
+      <!-- endrank -->
+      <!-- start rating distribution -->
+      <div class="sm:w-[80%] flex flex-col grow">
+        @for (dist of [5, 4, 3, 2, 1]; track $index) {
+          <div class="flex gap-2 items-center w-full">
+            <p class="text-secondary text-[12px]">{{ dist }}</p>
+            <div class="bg-gray-200 h-[8px] grow-1 rounded-full overflow-hidden">
+              <div
+                [style.width]="docRank().ratingDistribution[dist]"
+                class="h-full bg-primary w-0"
+              ></div>
+            </div>
+          </div>
+        }
+      </div>
+      <!-- end rating distribution-->
+    </div>
+
+    <!-- end docRank -->
     <div class="flex flex-col gap-4">
       <section>
         <h1 class="text-lg sm:text-[2vw] text-secondary font-semibold">{{ docData()?.name }}</h1>
@@ -56,8 +105,8 @@
         <div class="sm:text-[1.3vw] text-secondary">
           <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line1 }}</p>
           <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line2 }}</p>
-          <div formGroupName="address" [hidden]="updateDocInfo()" class="flex flex-col gap-1">
-            <div>
+          <div formGroupName="address" [hidden]="updateDocInfo()" class="flex flex-col gap-2 mt-2">
+            <div class="flex flex-col gap-1">
               <label class="font-medium" for="add1">Address 1</label>
               <input
                 class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"
@@ -73,7 +122,7 @@
                 }
               }
             </div>
-            <div>
+            <div class="flex flex-col gap-1">
               <label class="font-medium" for="add2">Address 2</label>
               <input
                 class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"

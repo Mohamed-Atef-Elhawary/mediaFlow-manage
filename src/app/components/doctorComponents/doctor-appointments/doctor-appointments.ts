@@ -48,29 +48,29 @@ export class DoctorAppointments implements OnInit {
     return year - dob.getFullYear();
   }
 
-  cancelAppointment(id: string, index: number) {
-    this.authDoctor.cancelAppointment(id).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.allAppointments.update((value) => {
-            value[index]['cancelled'] = true;
-            return value;
-          });
-          this.cdr.detectChanges();
-          this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
+  // cancelAppointment(id: string, index: number) {
+  //   this.authDoctor.cancelAppointment(id).subscribe({
+  //     next: (res) => {
+  //       if (res.success) {
+  //         this.allAppointments.update((value) => {
+  //           value[index]['cancelled'] = true;
+  //           return value;
+  //         });
+  //         this.cdr.detectChanges();
+  //         this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
 
-          console.log(res);
-        } else {
-          this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
+  //         console.log(res);
+  //       } else {
+  //         this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
 
-          console.log(res);
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
-      },
-    });
-  }
+  //         console.log(res);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+  //     },
+  //   });
+  // }
   completeAppointment(id: string, index: number) {
     this.authDoctor.completeAppointment(id).subscribe({
       next: (res) => {

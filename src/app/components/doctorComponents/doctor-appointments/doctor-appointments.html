@@ -47,11 +47,11 @@
           } @else if (appointment.isCompleted) {
             <p class="text-secondary">completed</p>
           } @else {
-            <fa-icon
+            <!-- <fa-icon
               (click)="cancelAppointment(appointment._id, num)"
               class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
               [icon]="xIcon"
-            ></fa-icon>
+            ></fa-icon> -->
             <fa-icon
               (click)="completeAppointment(appointment._id, num)"
               class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"

@@ -88,6 +88,14 @@ export class AuthAdmin {
       },
     );
   }
+  deleteAppointment(appointmentId: string): Observable<APIResponse> {
+    const token = this.adminInfo()?.token;
+    return this.http.post<APIResponse>(`${environment.backendUrl}`, appointmentId, {
+      headers: new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      }),
+    });
+  }
   completeAppointment(appointmentId: string): Observable<APIResponse> {
     const token = this.adminInfo()?.token;
     return this.http.post<APIResponse>(

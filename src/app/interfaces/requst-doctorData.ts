@@ -22,4 +22,7 @@ export interface RequestDoctorData {
   dateOfBirth: string;
   phone: string;
   appointmentBooked: any;
+  ratingDistribution: { [key: string]: number };
+  totalReviewers: number;
+  rank: number;
 }

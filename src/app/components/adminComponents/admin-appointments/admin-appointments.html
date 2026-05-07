@@ -54,15 +54,14 @@
         >
           <!-- <div class="text-2lg md:text-[1.5vw] flex gap-2"> -->
           @if (appointment.cancelled) {
-            <p class="text-secondary">canceled</p>
-          } @else if (appointment.isCompleted) {
-            <p class="text-secondary">completed</p>
-          } @else {
             <fa-icon
-              (click)="cancelAppointment(appointment._id, num)"
+              (click)="deleteAppointment(appointment._id)"
               class="cursor-pointer border-2 border-red-300 text-danger hover:border-danger"
               [icon]="xIcon"
             ></fa-icon>
+          } @else if (appointment.isCompleted) {
+            <p class="text-secondary">completed</p>
+          } @else {
             <fa-icon
               (click)="completeAppointment(appointment._id, num)"
               class="cursor-pointer border-2 border-sky-300 text-primary hover:border-primary"

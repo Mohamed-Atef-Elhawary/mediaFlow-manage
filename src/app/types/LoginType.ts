@@ -1,1 +1,1 @@
-export type LoginType = 'admin' | 'doctor' | null;
+export type LoginType = 'admin' | 'doctor';

@@ -47,13 +47,12 @@ export class AddminAppoinments implements OnInit {
     return year - dob.getFullYear();
   }
 
-  cancelAppointment(id: string, index: number) {
+  deleteAppointment(id: string) {
     this.authAdmin.cancelAppointment(id).subscribe({
       next: (res) => {
         if (res.success) {
           this.allAppointments.update((value) => {
-            value[index]['cancelled'] = true;
-            return value;
+            return value.filter((appointment) => appointment._id !== id);
           });
           this.cdr.detectChanges();
           this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);

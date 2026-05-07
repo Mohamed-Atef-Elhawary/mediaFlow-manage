@@ -9,7 +9,7 @@ import { AuthDoctor } from './auth-doctor';
 })
 export class AuthService {
   authView: WritableSignal<AuthType> = signal('outer');
-  authLogger: WritableSignal<LoginType> = signal(null);
+  authLogger: WritableSignal<LoginType> = signal('admin');
 
   constructor(
     private authAdmin: AuthAdmin,
