@@ -8,5 +8,6 @@ export class PhotoService {
     outer: 'outer.png',
     logo: 'logo.png',
     logo1: 'logo1.png',
+    notFound: 'notFound.png',
   };
 }

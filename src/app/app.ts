@@ -21,15 +21,16 @@ export class App {
   view: Signal<AuthType> = computed(() => this.authService.authView());
 
   ngOnInit() {
-    console.log(this.view());
-    if (this.view() === 'outer') {
-      this.router.navigate(['/outer']);
-    } else if (this.view() === 'authorized') {
-      if (this.authService.authLogger() === 'admin') {
-        this.router.navigate(['/admin']);
-      } else if (this.authService.authLogger() === 'doctor') {
-        this.router.navigate(['/doctor']);
-      }
-    }
+    // console.log(this.view());
+    // console.log(this.authService.authLogger());
+    // if (this.view() === 'outer') {
+    //   this.router.navigate(['/outer']);
+    // } else if (this.view() === 'authorized') {
+    //   if (this.authService.authLogger() === 'admin') {
+    //     this.router.navigate(['/admin']);
+    //   } else if (this.authService.authLogger() === 'doctor') {
+    //     this.router.navigate(['/doctor']);
+    //   }
+    // }
   }
 }

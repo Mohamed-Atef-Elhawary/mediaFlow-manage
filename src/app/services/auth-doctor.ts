@@ -13,6 +13,7 @@ import { UpdateDoctorData } from '../interfaces/update-doctor-data';
 export class AuthDoctor {
   doctorInfo: WritableSignal<DoctorInfo | null> = signal(this.getInfo());
   constructor(private http: HttpClient) {}
+
   getInfo(): DoctorInfo | null {
     const doctorInfo = localStorage.getItem('doctorInfo');
     if (doctorInfo) {
@@ -24,6 +25,7 @@ export class AuthDoctor {
     localStorage.setItem('doctorInfo', JSON.stringify(doctorInfo));
     this.doctorInfo.set(doctorInfo);
   }
+
   login(data: LoginApi): Observable<APIResponse> {
     return this.http.post<APIResponse>(`${environment.backendUrl}doctor/login`, data);
   }
@@ -33,63 +35,64 @@ export class AuthDoctor {
   }
 
   doctorDashboard(): Observable<APIResponse> {
-    const token = this.doctorInfo()?.token;
-    return this.http.get<APIResponse>(`${environment.backendUrl}doctor/dashboard`, {
-      headers: new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      }),
-    });
+    // const token = this.doctorInfo()?.token;
+    return this.http.get<APIResponse>(
+      `${environment.backendUrl}doctor/dashboard`,
+      //   , {
+      //   headers: new HttpHeaders({
+      //     authorization: `Bearer ${token}`,
+      //   }),
+      // }
+    );
   }
   doctorAppointments(): Observable<APIResponse> {
     const token = this.doctorInfo()?.token;
-    return this.http.get<APIResponse>(`${environment.backendUrl}doctor/appointment`, {
-      headers: new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      }),
-    });
-  }
-
-  cancelAppointment(appointmentId: string): Observable<APIResponse> {
-    const token = this.doctorInfo()?.token;
-    return this.http.post<APIResponse>(
-      `${environment.backendUrl}doctor/cancel`,
-      { appointmentId },
-      {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      },
+    return this.http.get<APIResponse>(
+      `${environment.backendUrl}doctor/appointment`,
+      //   , {
+      //   headers: new HttpHeaders({
+      //     authorization: `Bearer ${token}`,
+      //   }),
+      // }
     );
   }
+
   completeAppointment(appointmentId: string): Observable<APIResponse> {
     const token = this.doctorInfo()?.token;
     return this.http.post<APIResponse>(
       `${environment.backendUrl}doctor/complete`,
       { appointmentId },
-      {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      },
+      // {
+      //   headers: new HttpHeaders({
+      //     authorization: `Bearer ${token}`,
+      //   }),
+      // },
     );
   }
 
   getProfile(): Observable<APIResponse> {
     const token = this.doctorInfo()?.token;
-    return this.http.get<APIResponse>(`${environment.backendUrl}doctor/profile`, {
-      headers: new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      }),
-    });
+    return this.http.get<APIResponse>(
+      `${environment.backendUrl}doctor/profile`,
+      //   , {
+      //   headers: new HttpHeaders({
+      //     authorization: `Bearer ${token}`,
+      //   }),
+      // }
+    );
   }
 
   updateProfile(docData: FormData): Observable<APIResponse> {
     const token = this.doctorInfo()?.token;
     console.log('token ', token);
-    return this.http.post<APIResponse>(`${environment.backendUrl}doctor/update`, docData, {
-      headers: new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      }),
-    });
+    return this.http.post<APIResponse>(
+      `${environment.backendUrl}doctor/update`,
+      docData,
+      //   , {
+      //   headers: new HttpHeaders({
+      //     authorization: `Bearer ${token}`,
+      //   }),
+      // }
+    );
   }
 }

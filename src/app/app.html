@@ -1,16 +1,12 @@
-<div>
-  <div>
-    <app-navbar></app-navbar>
+<app-navbar></app-navbar>
+
+<div
+  [ngClass]="{ 'pt-[60px] lg:pt-[5vw]': view() === 'authorized' }"
+  class="mx-[2vw] sm:mx-[5vw] h-screen flex flex-col justify-between"
+>
+  <div class="grow">
+    <router-outlet></router-outlet>
   </div>
-  <div
-    [ngClass]="{ 'pt-[60px] lg:pt-[5vw]': view() === 'authorized' }"
-    class="mx-[2vw] sm:mx-[5vw] h-screen flex flex-col justify-between"
-  >
-    <div class="grow">
-      <router-outlet></router-outlet>
-    </div>
-    <div>
-      <app-footer></app-footer>
-    </div>
-  </div>
+
+  <app-footer></app-footer>
 </div>

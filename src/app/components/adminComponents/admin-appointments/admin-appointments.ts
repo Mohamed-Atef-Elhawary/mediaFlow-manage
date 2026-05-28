@@ -48,7 +48,7 @@ export class AddminAppoinments implements OnInit {
   }
 
   deleteAppointment(id: string) {
-    this.authAdmin.cancelAppointment(id).subscribe({
+    this.authAdmin.deleteAppointment(id).subscribe({
       next: (res) => {
         if (res.success) {
           this.allAppointments.update((value) => {

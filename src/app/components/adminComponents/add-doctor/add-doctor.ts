@@ -4,7 +4,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { FirstInvalid } from '../../../directives/first-invalid';
 import { AuthAdmin } from '../../../services/auth-admin';
-
+import { ToastrService } from 'ngx-toastr';
+import { toastrConfig } from '../../../config/toastrConfig';
 @Component({
   selector: 'app-add-doctor',
   imports: [FontAwesomeModule, ReactiveFormsModule, FirstInvalid],
@@ -28,6 +29,7 @@ export class AddDoctor implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authAdmin: AuthAdmin,
+    private toastr: ToastrService,
   ) {}
   ngOnInit(): void {
     this.makeForm();
@@ -35,7 +37,15 @@ export class AddDoctor implements OnInit {
 
   makeForm() {
     this.docForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          Validators.pattern('[a-z A-Z]{2,20}'),
+        ],
+      ],
 
       email: ['', [Validators.required, Validators.email]],
 
@@ -58,9 +68,6 @@ export class AddDoctor implements OnInit {
       this.docForm.markAllAsTouched();
     } else {
       this.submitData();
-      this.docForm.reset();
-      this.showImg.set(false);
-      this.docImg = '';
     }
   }
   imgUploaded(event: any) {
@@ -98,6 +105,26 @@ export class AddDoctor implements OnInit {
     if (this.docForm.get('imgFile')?.value) {
       docData.append('image', this.docForm.get('imgFile')?.value);
     }
-    this.authAdmin.addDoctor(docData).subscribe(console.log);
+    this.authAdmin.addDoctor(docData).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.toastr.success(res.message, 'Success', toastrConfig.successConfig);
+          this.clear();
+        } else {
+          this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
+          this.clear();
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
+        this.clear();
+      },
+    });
+  }
+
+  clear() {
+    this.docForm.reset();
+    this.showImg.set(false);
+    this.docImg = '';
   }
 }

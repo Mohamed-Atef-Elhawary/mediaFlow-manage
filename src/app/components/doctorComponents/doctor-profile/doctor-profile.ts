@@ -51,7 +51,7 @@ export class DoctorProfile implements OnInit {
 
   ngOnInit() {
     this.docData.set(this.route.snapshot.data['docResolver'].data);
-    console.log('this.docData()', this.docData());
+    // console.log('this.docData()', this.docData());
     this.makeForm();
     this.aplayRanking();
   }
@@ -154,7 +154,7 @@ export class DoctorProfile implements OnInit {
         };
         let ratingDistribution: { [key: string]: string } = {};
         for (let key of Object.keys(docData.ratingDistribution)) {
-          console.log(docData.ratingDistribution);
+          // console.log(docData.ratingDistribution);
           if (docData.ratingDistribution[key]) {
             let rate = (docData.ratingDistribution[key] / totalReviewers) * 100;
             ratingDistribution[key] = `${rate}%`;

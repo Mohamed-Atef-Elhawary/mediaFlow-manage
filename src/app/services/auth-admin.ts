@@ -16,6 +16,7 @@ export class AuthAdmin {
     private http: HttpClient,
     private router: Router,
   ) {}
+
   adminInfo: WritableSignal<AdminInfo | null> = signal<AdminInfo | null>(this.getInfo());
 
   getInfo(): AdminInfo | null {
@@ -25,14 +26,11 @@ export class AuthAdmin {
     }
     return null;
   }
+
   setInfo(data: AdminInfo): void {
     localStorage.setItem('adminInfo', JSON.stringify(data));
     this.adminInfo.set(data);
   }
-  // removeInfo(): void {
-  //   localStorage.removeItem('adminInfo');
-  //   this.adminInfo.set(null);
-  // }
 
   login(data: LoginApi): Observable<APIResponse> {
     return this.http.post<APIResponse>(`${environment.backendUrl}admin/login`, data);
@@ -76,21 +74,21 @@ export class AuthAdmin {
       }),
     });
   }
-  cancelAppointment(appointmentId: string): Observable<APIResponse> {
-    const token = this.adminInfo()?.token;
-    return this.http.post<APIResponse>(
-      `${environment.backendUrl}admin/cancel`,
-      { appointmentId },
-      {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      },
-    );
-  }
+  // cancelAppointment(appointmentId: string): Observable<APIResponse> {
+  //   const token = this.adminInfo()?.token;
+  //   return this.http.post<APIResponse>(
+  //     `${environment.backendUrl}admin/cancel`,
+  //     { appointmentId },
+  //     {
+  //       headers: new HttpHeaders({
+  //         authorization: `Bearer ${token}`,
+  //       }),
+  //     },
+  //   );
+  // }
   deleteAppointment(appointmentId: string): Observable<APIResponse> {
     const token = this.adminInfo()?.token;
-    return this.http.post<APIResponse>(`${environment.backendUrl}`, appointmentId, {
+    return this.http.post<APIResponse>(`${environment.backendUrl}admin/delete`, appointmentId, {
       headers: new HttpHeaders({
         authorization: `Bearer ${token}`,
       }),
