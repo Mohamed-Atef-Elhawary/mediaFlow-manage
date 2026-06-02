@@ -2,8 +2,17 @@ import { Routes } from '@angular/router';
 import { outerGuard } from './guards/outer-guard';
 import { loginGuard } from './guards/login-guard';
 import { docProfileDataResolver } from './resolvers/doc-profile-data-resolver';
+import { doctorGuard } from './guards/doctor-guard';
+import { adminGuard } from './guards/admin-guard';
+import { redirectGuard } from './guards/redirect-guard';
 
 export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./pages/outer-page/outer-page').then((c) => c.OuterPage),
+    canActivate: [redirectGuard],
+    pathMatch: 'full',
+  },
   {
     path: 'outer',
     loadComponent: () => import('./pages/outer-page/outer-page').then((c) => c.OuterPage),
@@ -17,6 +26,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./pages/admin-layout/admin-layout').then((c) => c.AdminLayout),
+    canActivateChild: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
@@ -50,6 +60,7 @@ export const routes: Routes = [
   {
     path: 'doctor',
     loadComponent: () => import('./pages/doctor-layout/doctor-layout').then((c) => c.DoctorLayout),
+    canActivateChild: [doctorGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {

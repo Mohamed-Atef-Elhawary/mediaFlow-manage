@@ -1,32 +1,45 @@
 @if (display()) {
-  <div class="fixed w-full h-[60px] lg:h-[5vw] bg-white">
-    <div class="mx-[2vw] sm:mx-[5vw] h-full flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <div>
-          <div class="w-[100px] h-[50px] lg:h-auto lg:w-[8vw]">
-            <img [src]="logo" alt="" />
+  <nav class="h-auto fixed top-0 left-0 right-0 z-50">
+    <div class="h-[60px] mx-[2vw] sm:mx-[5vw] lg:h-[5vw] bg-gray-50 dark:bg-slate-900">
+      <div class="mx-[2vw] sm:mx-[5vw] h-full flex items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div>
+            <div class="w-[100px] h-[50px] lg:h-auto lg:w-[8vw]">
+              <img [src]="logo" alt="" />
+            </div>
           </div>
-        </div>
-        <p class="text-secondary font-medium border-2 p-2 rounded-xl lg:text-[1.4vw]">
-          {{ loger().toUpperCase() }}
-        </p>
-        <div>
-          <button
-            (click)="logout()"
-            class="font-medium bg-primary p-2 rounded-xl text-white cursor-pointer lg:text-[1.4vw]"
+          <p
+            class="text-secondary font-medium border-2 p-2 rounded-xl lg:text-[1.4vw] dark:text-white"
           >
-            Logout
-          </button>
+            {{ loger().toUpperCase() }}
+          </p>
+          <div>
+            <button
+              (click)="logout()"
+              class="font-medium bg-primary p-2 rounded-xl text-white cursor-pointer lg:text-[1.4vw]"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <div>
+          @if (loger() === 'admin') {
+            <div class="w-[100px] h-[50px] lg:h-[4vw] lg:w-[8vw]">
+              <img class="w-full h-full object-cover" [src]="adminImage()" alt="" />
+            </div>
+          }
         </div>
       </div>
-
-      <div>
-        @if (loger() === 'admin') {
-          <div class="w-[100px] h-[50px] lg:h-[4vw] lg:w-[8vw]">
-            <img class="w-full h-full object-cover" [src]="adminImage()" alt="" />
-          </div>
-        }
-      </div>
+    </div>
+  </nav>
+  <div
+    #switchUserMode
+    [ngClass]="showThemeOptions() ? 'fixed' : 'hidden'"
+    class="top-0 left-0 right-0 bottom-0 bg-black/50 z-100"
+  >
+    <div class="w-[80%] sm:w-[50%] absolute top-[50%] left-[50%] translate-[-50%]">
+      <div #modesComponent></div>
     </div>
   </div>
 }

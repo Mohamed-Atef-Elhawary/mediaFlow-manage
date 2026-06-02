@@ -12,7 +12,7 @@ import { AuthDoctor } from '../../../services/auth-doctor';
 
 @Component({
   selector: 'app-doctor-appointments',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, DatePipe],
   templateUrl: './doctor-appointments.html',
   styleUrl: './doctor-appointments.css',
 })
@@ -47,30 +47,10 @@ export class DoctorAppointments implements OnInit {
     let dob = new Date(Number(date));
     return year - dob.getFullYear();
   }
+  getAppointmentDate(date: string): Date {
+    return new Date(Number(date));
+  }
 
-  // cancelAppointment(id: string, index: number) {
-  //   this.authDoctor.cancelAppointment(id).subscribe({
-  //     next: (res) => {
-  //       if (res.success) {
-  //         this.allAppointments.update((value) => {
-  //           value[index]['cancelled'] = true;
-  //           return value;
-  //         });
-  //         this.cdr.detectChanges();
-  //         this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
-
-  //         console.log(res);
-  //       } else {
-  //         this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
-
-  //         console.log(res);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
-  //     },
-  //   });
-  // }
   completeAppointment(id: string, index: number) {
     this.authDoctor.completeAppointment(id).subscribe({
       next: (res) => {

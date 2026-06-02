@@ -9,3 +9,8 @@
   --color-secondary: #6c757d;
   --color-dark: #212529;
 }
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  @apply transition-colors duration-300;
+}

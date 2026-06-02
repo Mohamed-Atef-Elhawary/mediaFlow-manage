@@ -1,37 +1,46 @@
-<div class="h-full border-b-2 sm:border-r-2 border-gray-200">
+<div
+  class="h-full sm:border-b-2 sm:border-r-2 border-gray-200 md:border-0 bg-white dark:bg-slate-900"
+>
   <div>
     <ul class="flex flex-col gap-2">
       <li
         routerLink="/admin/dashboard"
-        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
-        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+        routerLinkActive="active border-r-4 border-danger"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer lg:text-[1.4vw] hover:text-danger [.active]:text-white [.active]:hover:text-white [.active]:bg-primary [.active]:dark:bg-slate-600 hover:bg-sky-100 dark:hover:bg-slate-700 dark:text-white []"
       >
         <fa-icon [icon]="dashIcon"></fa-icon>
         <p>Dashboard</p>
       </li>
       <li
         routerLink="/admin/appointment"
-        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
-        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+        routerLinkActive="active border-r-4 border-danger"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer lg:text-[1.4vw] hover:text-danger [.active]:text-white [.active]:hover:text-white [.active]:bg-primary [.active]:dark:bg-slate-600 hover:bg-sky-100 dark:hover:bg-slate-700 dark:text-white []"
       >
         <fa-icon [icon]="appoitIcon"></fa-icon>
         <p>Appointments</p>
       </li>
       <li
         routerLink="/admin/add"
-        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
-        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+        routerLinkActive="active border-r-4 border-danger"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer lg:text-[1.4vw] hover:text-danger [.active]:text-white [.active]:hover:text-white [.active]:bg-primary [.active]:dark:bg-slate-600 hover:bg-sky-100 dark:hover:bg-slate-700 dark:text-white []"
       >
         <fa-icon [icon]="addIcon"></fa-icon>
         <p>Add Doctor</p>
       </li>
       <li
         routerLink="/admin/list"
-        routerLinkActive="border-r-4 border-danger bg-primary text-white active"
-        class="flex gap-2 items-center font-medium p-2 cursor-pointer not-[.active]:hover:bg-sky-200 lg:text-[1.4vw]"
+        routerLinkActive="active border-r-4 border-danger"
+        class="flex gap-2 items-center font-medium p-2 cursor-pointer lg:text-[1.4vw] hover:text-danger [.active]:text-white [.active]:hover:text-white [.active]:bg-primary [.active]:dark:bg-slate-600 hover:bg-sky-100 dark:hover:bg-slate-700 dark:text-white []"
       >
         <fa-icon [icon]="listIcon"></fa-icon>
         <p>Doctors List</p>
+      </li>
+      <li
+        (click)="showModeOptions()"
+        class="flex gap-2 items-center font-medium p-2 lg:text-[1.4vw] cursor-pointer :hover:bg-sky-100 hover:text-danger dark:text-white dark:hover:bg-slate-700"
+      >
+        <fa-icon [icon]="themeIcon"></fa-icon>
+        <p>Theme</p>
       </li>
     </ul>
   </div>

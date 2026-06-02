@@ -74,25 +74,18 @@ export class AuthAdmin {
       }),
     });
   }
-  // cancelAppointment(appointmentId: string): Observable<APIResponse> {
-  //   const token = this.adminInfo()?.token;
-  //   return this.http.post<APIResponse>(
-  //     `${environment.backendUrl}admin/cancel`,
-  //     { appointmentId },
-  //     {
-  //       headers: new HttpHeaders({
-  //         authorization: `Bearer ${token}`,
-  //       }),
-  //     },
-  //   );
-  // }
+
   deleteAppointment(appointmentId: string): Observable<APIResponse> {
     const token = this.adminInfo()?.token;
-    return this.http.post<APIResponse>(`${environment.backendUrl}admin/delete`, appointmentId, {
-      headers: new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      }),
-    });
+    return this.http.post<APIResponse>(
+      `${environment.backendUrl}admin/delete`,
+      { appointmentId },
+      {
+        headers: new HttpHeaders({
+          authorization: `Bearer ${token}`,
+        }),
+      },
+    );
   }
   completeAppointment(appointmentId: string): Observable<APIResponse> {
     const token = this.adminInfo()?.token;

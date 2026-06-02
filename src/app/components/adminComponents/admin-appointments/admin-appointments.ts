@@ -11,7 +11,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-addmin-appoinments',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, DatePipe],
   templateUrl: './admin-appointments.html',
   styleUrl: './admin-appointments.css',
 })
@@ -46,7 +46,9 @@ export class AddminAppoinments implements OnInit {
     let dob = new Date(Number(date));
     return year - dob.getFullYear();
   }
-
+  getAppointmentDate(date: string): Date {
+    return new Date(Number(date));
+  }
   deleteAppointment(id: string) {
     this.authAdmin.deleteAppointment(id).subscribe({
       next: (res) => {

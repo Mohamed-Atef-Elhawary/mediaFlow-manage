@@ -1,4 +1,4 @@
-<div class="min-h-[50vh] pb-1">
+<div class="h-full p-2 dark:bg-slate-800">
   <form class="flex flex-col gap-4" [formGroup]="docForm" (ngSubmit)="submit()" appFirstInvalid>
     <div class="w-full h-[50vw] sm:h-[30vw]">
       <label
@@ -14,7 +14,9 @@
     <div class="flex gap-4">
       <!-- startrank -->
       <div class="w-fit sm:w-[20%] shrink-0">
-        <p class="text-[50px]">{{ docRank().rank.decimal }}.{{ docRank().rank.frag }}</p>
+        <p class="text-[50px] dark:text-white">
+          {{ docRank().rank.decimal }}.{{ docRank().rank.frag }}
+        </p>
         <div class="flex gap-[2px]">
           @for (rank of [1, 2, 3, 4, 5]; track $index) {
             <div class="relative w-fit">
@@ -38,14 +40,19 @@
           }
         </div>
 
-        <p class="text-secondary">Reviewers {{ docRank().totalReviewers }}</p>
+        <p class="text-secondary dark:text-slate-300">
+          Reviewers
+          <span class="font-bold">
+            {{ docRank().totalReviewers }}
+          </span>
+        </p>
       </div>
       <!-- endrank -->
       <!-- start rating distribution -->
       <div class="sm:w-[80%] flex flex-col grow">
         @for (dist of [5, 4, 3, 2, 1]; track $index) {
           <div class="flex gap-2 items-center w-full">
-            <p class="text-secondary text-[12px]">{{ dist }}</p>
+            <p class="text-secondary text-[12px] dark:text-slate-300">{{ dist }}</p>
             <div class="bg-gray-200 h-[8px] grow-1 rounded-full overflow-hidden">
               <div
                 [style.width]="docRank().ratingDistribution[dist]"
@@ -61,26 +68,30 @@
     <!-- end docRank -->
     <div class="flex flex-col gap-4">
       <section>
-        <h1 class="text-lg sm:text-[2vw] text-secondary font-semibold">{{ docData()?.name }}</h1>
-        <p class="sm:text-[1.5vw] text-dark font-medium">
+        <h1 class="text-lg sm:text-[2vw] text-secondary font-semibold dark:text-white">
+          {{ docData()?.name }}
+        </h1>
+        <p class="sm:text-[1.5vw] text-dark font-medium dark:text-slate-400">
           {{ docData()?.degree }} - {{ docData()?.speciality }}
-          <span class="text-gray-300 border-2 px-1 rounded-lg"
+          <span class="text-gray-300 border-2 px-1 rounded-lg dark:text-slate-300"
             >{{ docData()?.experience }} Year</span
           >
         </p>
       </section>
 
       <section>
-        <h2 class="sm:text-[1.5vw] text-dark">About</h2>
-        <p class="sm:text-[1.3vw] text-gray-300">{{ docData()?.about }}</p>
+        <h2 class="sm:text-[1.5vw] text-dark dark:text-white">About</h2>
+        <p class="sm:text-[1.3vw] text-gray-300 dark:text-slate-300">{{ docData()?.about }}</p>
       </section>
 
       <div
         [ngClass]="{ 'flex flex-col gap-1': !updateDocInfo() }"
-        class="sm:text-[1.5vw] text-dark font-medium"
+        class="sm:text-[1.5vw] text-dark font-medium dark:text-white"
       >
-        <span>consultation Fee:</span>
-        <span [hidden]="!updateDocInfo()">{{ docData()?.consultationFee | currency: 'EGP' }}</span>
+        <span>consultation Fee: </span>
+        <span [hidden]="!updateDocInfo()">{{
+          docData()?.consultationFee | currency: ' EGP '
+        }}</span>
         <div [hidden]="updateDocInfo()">
           <input
             class="outline-0 border-2 border-sky-200 w-[80%] sm:w-[50%] py-1"
@@ -101,8 +112,8 @@
         [ngClass]="{ 'flex flex-col': !updateDocInfo(), 'flex flex-row': updateDocInfo() }"
         class="gap-1"
       >
-        <h2 class="sm:text-[1.5vw] text-dark font-medium">Address:</h2>
-        <div class="sm:text-[1.3vw] text-secondary">
+        <h2 class="sm:text-[1.5vw] text-dark font-medium dark:text-white">Address:</h2>
+        <div class="sm:text-[1.3vw] text-secondary dark:text-slate-400">
           <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line1 }}</p>
           <p [hidden]="!updateDocInfo()">{{ docData()?.address?.line2 }}</p>
           <div formGroupName="address" [hidden]="updateDocInfo()" class="flex flex-col gap-2 mt-2">
@@ -145,16 +156,16 @@
         @if (docData()?.available) {
           <div class="flex gap-1 sm:text-[1.5vw]">
             <fa-icon class="text-primary" [icon]="availableIcon"></fa-icon>
-            <p>Available</p>
+            <p class="dark:text-white">Available</p>
           </div>
         } @else {
           <div class="flex gap-1 sm:text-[1.5vw]">
             <fa-icon class="text-secondary" [icon]="notAvailableIcon"></fa-icon>
-            <p>Not Available</p>
+            <p class="dark:text-white">Not Available</p>
           </div>
         }
       } @else {
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 dark:text-white">
           <div class="flex gap-1 border-2 border-sky-200 p-1 w-fit">
             <label class="w-[35vw] md:w-[25vw]" for="av">Available</label>
             <input

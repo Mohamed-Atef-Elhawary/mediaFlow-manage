@@ -1,5 +1,5 @@
-<div class="p-4 bg-gray-50">
-  <h1 class="tex-lg md:text-[1.5vw] font-semibold">Add Doctor</h1>
+<div class="p-4 h-full bg-gray-50 dark:bg-slate-800">
+  <h1 class="tex-lg md:text-[1.5vw] font-semibold dark:text-white">Add Doctor</h1>
   <div class="mt-6 border-2 border-gray-200 p-4">
     <form [formGroup]="docForm" (ngSubmit)="submit($event)" appFirstInvalid>
       <!-- doc img -->
@@ -15,7 +15,7 @@
             } @else {
               <fa-icon class="text-primary" [icon]="docIcon"></fa-icon>
             }
-            <p>Upload doctor picture</p>
+            <p class="dark:text-slate-300">Upload doctor picture</p>
           </div>
         </label>
         <input class="hidden" type="file" id="docImg" (change)="imgUploaded($event)" />
@@ -23,7 +23,7 @@
 
       <div class="flex flex-col md:flex-row gap-6 mt-6">
         <!-- left side -->
-        <div class="bg-white flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw]">
+        <div class="flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw] dark:text-slate-300">
           <div class="flex flex-col gap-1 w-[80%]">
             <label class="font-medium" for="docName">Doctor name</label>
             <input
@@ -149,7 +149,7 @@
           </div>
         </div>
         <!-- right side -->
-        <div class="bg-white flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw]">
+        <div class="flex flex-col gap-3 w-full md:w-[50%] lg:text-[1.5vw] dark:text-slate-300">
           <div class="flex flex-col gap-1">
             <p class="font-medium mb-2">Speciality</p>
             @for (speciality of specialityList; track $index) {
@@ -192,7 +192,7 @@
       </div>
 
       <!-- doc about -->
-      <div class="flex flex-col gap-1 lg:text-[1.5vw] mt-3">
+      <div class="flex flex-col gap-1 lg:text-[1.5vw] mt-3 dark:text-slate-300">
         <label class="font-medium" for="about">About</label>
         <textarea
           class="w-full min-h-[100px] resize-none outline-0 border-gray-200 border-2 p-1"
