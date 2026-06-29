@@ -1,4 +1,4 @@
-import express from 'express';
+import { Express } from 'express';
 import { Multer } from 'multer';
 export interface AddDoctorData {
   name: string;

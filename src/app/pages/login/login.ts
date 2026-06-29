@@ -34,7 +34,6 @@ export class Login implements OnInit {
   authLogger: Signal<LoginType> = computed(() => this.authService.authLogger());
 
   ngOnInit() {
-    console.log(this.authService.authView());
     this.makeForm();
   }
 
@@ -87,12 +86,10 @@ export class Login implements OnInit {
           this.authAdmin.setInfo(res.data);
           this.authService.authView.set('authorized');
           this.router.navigate(['/admin']);
-          console.log(this.authService.authView());
         }
       },
       error: (err) => {
         this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
-        console.log(err);
       },
     });
   }
@@ -104,12 +101,10 @@ export class Login implements OnInit {
           this.authService.authView.set('authorized');
           this.router.navigate(['/doctor']);
         } else {
-          console.log(res);
           this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
         }
       },
       error: (err) => {
-        console.log(err);
         this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
       },
     });

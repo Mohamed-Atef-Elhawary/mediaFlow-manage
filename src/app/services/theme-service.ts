@@ -5,6 +5,7 @@ import { effect, Injectable, signal } from '@angular/core';
 })
 export class ThemeService {
   mode = signal<'Light' | 'Dark'>(this.setMode());
+
   showOptions = signal<boolean>(false);
   constructor() {
     effect(() => {

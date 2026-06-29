@@ -71,11 +71,9 @@ export class AddDoctor implements OnInit {
     }
   }
   imgUploaded(event: any) {
-    // console.log(this.docForm.get('imgFile')?.value);
     let file = event.target.files[0];
     if (file) {
       this.docForm.patchValue({ imgFile: file });
-      // console.log(this.docForm.get('imgFile')?.value);
       const reader = new FileReader();
       reader.onload = () => {
         this.docImg = reader.result as string;

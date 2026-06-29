@@ -29,15 +29,12 @@ export class AddminAppoinments implements OnInit {
       next: (res) => {
         if (res.success && res.data) {
           this.allAppointments.set(res.data);
-          console.log(this.allAppointments());
         } else {
           this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
-          console.log(res);
         }
       },
       error: (err) => {
         this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
-        console.log(err);
       },
     });
   }
@@ -58,12 +55,8 @@ export class AddminAppoinments implements OnInit {
           });
           this.cdr.detectChanges();
           this.toastr.success(res.message, 'Canceled', toastrConfig.successConfig);
-
-          console.log(res);
         } else {
           this.toastr.error(res.message, 'Error', toastrConfig.errorConfig);
-
-          console.log(res);
         }
       },
       error: (err) => {
@@ -81,11 +74,8 @@ export class AddminAppoinments implements OnInit {
           });
           this.cdr.detectChanges();
           this.toastr.success(res.message, 'completed', toastrConfig.successConfig);
-          console.log(res);
         } else {
           this.toastr.error(res.message, 'error', toastrConfig.errorConfig);
-
-          console.log(res);
         }
       },
       error: (err) => {

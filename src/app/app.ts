@@ -1,5 +1,5 @@
-import { Component, computed, Signal, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, computed, inject, Signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Footer } from './components/footer/footer';
 import { Navbar } from './components/navbar/navbar';
 import { AuthService } from './services/auth-service';
@@ -13,24 +13,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('mediaFlow-manage');
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
-  view: Signal<AuthType> = computed(() => this.authService.authView());
+  private authService = inject(AuthService);
 
-  ngOnInit() {
-    // console.log(this.view());
-    // console.log(this.authService.authLogger());
-    // if (this.view() === 'outer') {
-    //   this.router.navigate(['/outer']);
-    // } else if (this.view() === 'authorized') {
-    //   if (this.authService.authLogger() === 'admin') {
-    //     this.router.navigate(['/admin']);
-    //   } else if (this.authService.authLogger() === 'doctor') {
-    //     this.router.navigate(['/doctor']);
-    //   }
-    // }
-  }
+  view: Signal<AuthType> = computed(() => this.authService.authView());
 }

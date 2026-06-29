@@ -1,14 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  computed,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { toastrConfig } from '../../../config/toastrConfig';
-import { CurrencyPipe, DatePipe, NgClass, NgStyle } from '@angular/common';
+import { CurrencyPipe, NgClass, NgStyle } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthDoctor } from '../../../services/auth-doctor';
 import { RequestDoctorData } from '../../../interfaces/requst-doctorData';
@@ -51,9 +44,9 @@ export class DoctorProfile implements OnInit {
 
   ngOnInit() {
     this.docData.set(this.route.snapshot.data['docResolver'].data);
-    // console.log('this.docData()', this.docData());
     this.makeForm();
     this.aplayRanking();
+    this.cdr.detectChanges();
   }
   makeForm() {
     this.docForm = this.fb.group({
@@ -74,7 +67,6 @@ export class DoctorProfile implements OnInit {
       available: [this.docData()?.available],
       image: [],
     });
-    this.cdr.detectChanges();
   }
 
   fileUploaded(event: any) {
@@ -85,10 +77,7 @@ export class DoctorProfile implements OnInit {
       reader.onload = () => {
         this.docData.update((data: RequestDoctorData | null) => {
           if (data) {
-            data.image = reader.result as string;
-            console.log(event.target.value);
-            this.cdr.detectChanges();
-            return data;
+            return { ...data, image: reader.result as string };
           }
           return null;
         });
@@ -128,7 +117,9 @@ export class DoctorProfile implements OnInit {
     this.authDoctor.updateProfile(formData).subscribe({
       next: (res) => {
         if (res.success) {
-          this.router.navigate(['/doctor']);
+          this.toastr.success(res.message, 'Success', toastrConfig.successConfig);
+          this.updateDocInfo.set(true);
+          this.saveDocInfo.set(false);
         }
       },
       error: (err) => {
@@ -139,7 +130,6 @@ export class DoctorProfile implements OnInit {
   aplayRanking(): void {
     let docData = this.docData();
     if (docData) {
-      // const { rank: rankAlias, totalReviewers } = this.docData();
       const rankAlias = docData.rank;
       const totalReviewers = docData.totalReviewers;
 
@@ -154,7 +144,6 @@ export class DoctorProfile implements OnInit {
         };
         let ratingDistribution: { [key: string]: string } = {};
         for (let key of Object.keys(docData.ratingDistribution)) {
-          // console.log(docData.ratingDistribution);
           if (docData.ratingDistribution[key]) {
             let rate = (docData.ratingDistribution[key] / totalReviewers) * 100;
             ratingDistribution[key] = `${rate}%`;
@@ -168,60 +157,7 @@ export class DoctorProfile implements OnInit {
           totalReviewers,
           ratingDistribution,
         });
-        this.cdr.detectChanges();
       }
     }
   }
 }
-/*
- 
-  <!-- srart docRank -->
-    <div class="flex gap-4">
-      <!-- startrank -->
-      <div class="w-fit sm:w-[20%] shrink-0">
-        <p class="text-[50px]">{{ docRank().rank.decimal }}.{{ docRank().rank.frag }}</p>
-        <div class="flex gap-[2px]">
-          @for (rank of [1, 2, 3, 4, 5]; track $index) {
-            <div class="relative w-fit">
-              <div class="text-gray-300">
-                <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
-              </div>
-
-              @if (rank <= docRank().rank.decimal) {
-                <div class="absolute top-0 left-0 overflow-hidden text-primary">
-                  <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
-                </div>
-              } @else if (rank === docRank().rank.decimal + 1) {
-                <div
-                  [ngStyle]="{ width: docRank().rank.frag * 10 + '%' }"
-                  class="absolute top-0 left-0 overflow-hidden text-primary"
-                >
-                  <fa-icon class="text-[12px]" [icon]="starIcon"></fa-icon>
-                </div>
-              }
-            </div>
-          }
-        </div>
-
-        <p class="text-secondary">Reviewers {{ docRank().totalReviewers }}</p>
-      </div>
-      <!-- endrank -->
-      <!-- start rating distribution -->
-      <div class="sm:w-[80%] flex flex-col grow">
-        @for (dist of [5, 4, 3, 2, 1]; track $index) {
-          <div class="flex gap-2 items-center w-full">
-            <p class="text-secondary text-[12px]">{{ dist }}</p>
-            <div class="bg-gray-200 h-[8px] grow-1 rounded-full overflow-hidden">
-              <div
-                [style.width]="docRank().ratingDistribution[dist]"
-                class="h-full bg-primary w-0"
-              ></div>
-            </div>
-          </div>
-        }
-      </div>
-      <!-- end rating distribution-->
-    </div>
-
-    <!-- end docRank -->
-*/

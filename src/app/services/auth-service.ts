@@ -1,4 +1,4 @@
-import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { AuthType } from '../types/AuthType';
 import { LoginType } from '../types/LoginType';
 import { AuthAdmin } from './auth-admin';

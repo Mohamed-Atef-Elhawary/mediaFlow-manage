@@ -26,11 +26,9 @@ export class DoctorList implements OnInit {
       next: (res) => {
         if (res.success) {
           this.allDoctors.set(res.data);
-          console.log(this.allDoctors());
         }
       },
       error: (err) => {
-        console.log(err);
         this.toastr.error(err.mesage, 'Error', toastrConfig.errorConfig);
       },
     });

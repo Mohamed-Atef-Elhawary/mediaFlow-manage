@@ -48,16 +48,10 @@ export class DoctorDashboard {
         if (res.success && res.data) {
           this.dashData.set(res.data);
           this.cdr.detectChanges();
-          console.log(res.data);
-          console.log(this.dashData());
-          console.log(this.dashData().completedAppointments);
-        } else {
-          console.log(res);
         }
       },
       error: (err: APIResponse) => {
         this.toastr.error(err.message, 'Error', toastrConfig.errorConfig);
-        console.log(err);
       },
     });
   }
