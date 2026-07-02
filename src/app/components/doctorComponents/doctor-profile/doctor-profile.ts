@@ -45,7 +45,7 @@ export class DoctorProfile implements OnInit {
   ngOnInit() {
     this.docData.set(this.route.snapshot.data['docResolver'].data);
     this.makeForm();
-    this.aplayRanking();
+    this.aplyRanking();
     this.cdr.detectChanges();
   }
   makeForm() {
@@ -127,7 +127,7 @@ export class DoctorProfile implements OnInit {
       },
     });
   }
-  aplayRanking(): void {
+  aplyRanking(): void {
     let docData = this.docData();
     if (docData) {
       const rankAlias = docData.rank;
