@@ -40,9 +40,7 @@ export class DoctorAppointments implements OnInit {
   }
   getAge(date: string): number {
     let year: number = new Date().getFullYear();
-
     let dob = Number(date.split('-')[0]);
-
     return year - dob;
   }
   getAppointmentDate(date: string): Date {
